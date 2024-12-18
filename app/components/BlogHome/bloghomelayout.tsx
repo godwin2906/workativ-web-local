@@ -14,6 +14,9 @@ const BlogList: React.FC<BlogListProps> = ({ blogs }) => {
     "Generative AI",
     "Knowladge AI",
   ];
+  if (!Array.isArray(blogs)) {
+    return <div>No blogs available</div>; // Handle the case where it's not an array
+  }
   return (
     <div className="flex flex-col gap-12 w-full justify-center items-center">
       <div>
