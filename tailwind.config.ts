@@ -18,19 +18,25 @@ export default {
       },
       textColor: {
         brand: {
-          primary: '#21243D',
-          secondary:'#1C5CFF'
+          primary:"#000000",
+          secondary: '#21243D',
+          text_blue:'#1C5CFF'
         }
       },
       backgroundColor:{
         brand:{
           primary:"#E3FC87",
-          secondary:"#EDF1F9"
+          secondary:"#EDF1F9",
+          card:'#F4F3F3',
+          bg_white:"#FFFFFF"
         }
       },
       borderColor: {
         brand: {
-          primary: '#1C5CFF'
+          primary: '#1C5CFF',
+          secondary:"#F4F3F3",
+          card:'#F4F3F3',
+          border_blue:"#1C5CFF"
         }
       }
     },
