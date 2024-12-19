@@ -65,12 +65,7 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
 
   return (
     <div className="flex flex-col gap-12 w-full mt-5 mb-5 px-20 justify-center items-center overflow-x-hidden">
-      <div
-        className="bg-cover bg-right bg-no-repeat bg-red-700"
-        style={{ backgroundImage: `url(${bgImg})` }}
-      >
-        <BlogHeader blog={featuredBlog} isHomeBlog={false} />
-      </div>
+      <BlogHeader blog={featuredBlog} isHomeBlog={false} />
 
       <div className="flex flex-col gap-10 w-full mt-5 mb-5 px-20  overflow-x-hidden">
         {categoryChunks.map((chunk, index) => (
