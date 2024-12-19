@@ -1,8 +1,16 @@
+import React, { useState } from "react";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS, INLINES, Block, Inline } from "@contentful/rich-text-types";
 
+type ContentItem = {
+  subtitle: string;
+  content: any;
+};
+
 type BlogPostProps = {
-  blogPost: any;
+  blogPost: {
+    contentItems: ContentItem[];
+  };
   relatedBlogs: Array<{
     fields: {
       blogtitle: string;
@@ -52,13 +60,69 @@ const options: any = {
   },
 };
 
-export default function BlogPostLayout({ blogPost, relatedBlogs, authorData }: BlogPostProps) {
+const TableOfContents: React.FC<{ contentItems: ContentItem[] }> = ({
+  contentItems,
+}) => {
+  const [isOpen, setIsOpen] = useState(true);
+
+  return (
+    <div className="border border-blue-500 rounded-lg bg-white">
+      {/* Header Section */}
+      <div
+        className="flex justify-between items-center p-4 border-b border-blue-500 cursor-pointer"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+        role="button"
+      >
+        <h3 className="text-blue-500 font-semibold text-lg">In this Blog</h3>
+        <span
+          className={`text-blue-500 transform ${
+            isOpen ? "rotate-180" : ""
+          } transition-transform`}
+        >
+          ⌄
+        </span>
+      </div>
+
+      {/* Content Section */}
+      {isOpen && (
+        <ul
+          className="p-4 overflow-y-auto"
+          style={{
+            maxHeight: "200px", // Set the height of the box
+          }}
+        >
+          {contentItems.map((item, index) =>
+            item.subtitle !== "Introduction" ? (
+              <li key={index} className="mb-2">
+                <a
+                  href={`#subtitle-${index}`}
+                  className="text-blue-500 hover:underline"
+                >
+                  {item.subtitle}
+                </a>
+              </li>
+            ) : null
+          )}
+        </ul>
+      )}
+    </div>
+  );
+};
+
+
+export default function BlogPostLayout({
+  blogPost,
+  relatedBlogs,
+  authorData,
+}: BlogPostProps) {
   const contentItems = blogPost.contentItems;
 
   return (
     <div className="flex">
+      {/* Main Content */}
       <div className="w-3/4 p-4">
-        {contentItems.map((item: any, index: number) => (
+        {contentItems.map((item, index) => (
           <div key={index} id={`subtitle-${index}`}>
             {item.subtitle !== "Introduction" && (
               <h3 className="text-2xl font-semibold">{item.subtitle}</h3>
@@ -67,6 +131,7 @@ export default function BlogPostLayout({ blogPost, relatedBlogs, authorData }: B
           </div>
         ))}
 
+        {/* Author Section */}
         <div className="mt-12">
           <h2 className="text-2xl font-semibold mb-4">About the Author</h2>
           <div className="flex items-center">
@@ -86,6 +151,7 @@ export default function BlogPostLayout({ blogPost, relatedBlogs, authorData }: B
           </div>
         </div>
 
+        {/* Related Blogs Section */}
         <div className="mt-12">
           <h2 className="text-2xl font-semibold mb-4">Read More</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -116,22 +182,9 @@ export default function BlogPostLayout({ blogPost, relatedBlogs, authorData }: B
         </div>
       </div>
 
+      {/* Table of Contents */}
       <div className="w-1/4 p-4 border-l">
-        <h3 className="text-lg font-semibold mb-2">Table of Contents</h3>
-        <ul className="list-disc ml-4">
-          {contentItems.map((item: any, index: number) =>
-            item.subtitle !== "Introduction" ? (
-              <li key={index}>
-                <a
-                  href={`#subtitle-${index}`}
-                  className="text-blue-500 hover:underline"
-                >
-                  {item.subtitle}
-                </a>
-              </li>
-            ) : null
-          )}
-        </ul>
+        <TableOfContents contentItems={contentItems} />
       </div>
     </div>
   );
