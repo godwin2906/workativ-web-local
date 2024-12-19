@@ -1,5 +1,7 @@
 import { useState, useMemo } from "react";
 import BlogHeader from "../BlogComp/blogheader";
+import bgImg from "../../Images/Ellipse.png";
+import cateory from "../../Images/category.svg";
 
 interface BlogListProps {
   blogs: any[];
@@ -63,15 +65,23 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
 
   return (
     <div className="flex flex-col gap-12 w-full mt-5 mb-5 px-20 justify-center items-center overflow-x-hidden">
-      <BlogHeader blog={featuredBlog} isHomeBlog={true} />
+      <div
+        className="bg-cover bg-right bg-no-repeat bg-red-700"
+        style={{ backgroundImage: `url(${bgImg})` }}
+      >
+        <BlogHeader blog={featuredBlog} isHomeBlog={false} />
+      </div>
 
-      <div className="flex flex-col gap-12 w-full mt-5 mb-5 px-20 justify-center items-center overflow-x-hidden">
+      <div className="flex flex-col gap-10 w-full mt-5 mb-5 px-20  overflow-x-hidden">
         {categoryChunks.map((chunk, index) => (
-          <div key={index} className="flex gap-4 w-full">
+          <div
+            key={index}
+            className="flex gap-4 w-full justify-center items-center"
+          >
             {chunk.map((category: any, categoryIndex: number) => (
               <button
                 key={categoryIndex}
-                className={`border hover:bg-brand-secondary rounded-2xl px-3 py-1 border-brand-primary text-brand-text_blue ${
+                className={`border hover:bg-brand-secondary rounded-[61px] px-5 py-3 text-[24px] font-medium leading-[31px] border-brand-primary text-brand-text_blue ${
                   selectedCategory === category.fields.name
                     ? "bg-brand-secondary text-brand-text_blue"
                     : ""
@@ -92,18 +102,18 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
         ))}
       </div>
 
-      <div className="grid grid-cols-3 gap-12 w-full justify-center items-center">
+      <div className="grid grid-cols-3 gap-10 w-full justify-center items-center ">
         {currentBlogs.map((data: any, index: number) => (
           <div
             key={index}
-            className="flex flex-col w-full min-h-[500px] max-h-[37rem] maxgap-5 border border-brand-border_blue rounded-[27px]"
+            className="flex flex-col w-full min-h-[500px] max-h-[37rem] maxgap-5 border border-brand-border_blue rounded-[27px] shadow-[0px_4px_0px_0px_#1C5CFF]"
           >
             <div className="bg-brand-card rounded-tl-[26px] rounded-tr-[26px] border border-brand-card flex items-center justify-center h-[300px]">
-              image
+              <img src={cateory} />
             </div>
 
-            <div className="flex flex-col justify-between flex-1 gap-4 px-5 py-3">
-              <div className="font-bold text-lg line-clamp-2">
+            <div className="flex flex-col justify-between flex-1 gap-3 px-10 py-5">
+              <div className="font-bold text-[20px] leading-[25px] line-clamp-2">
                 {data.fields.blogtitle}
               </div>
 
@@ -113,34 +123,35 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
                     (category: any, index: number) => (
                       <div
                         key={index}
-                        className="border rounded-2xl px-3 py-1 border-brand-primary text-brand-primary bg-brand-primary w-fit"
+                        className="border rounded-[15px] px-3 py-1 border-brand-primary text-brand-primary bg-brand-primary w-fit text-[15px] font-medium"
                       >
                         {category.fields.displayName}
                       </div>
                     )
                   )}
                 </div>
-                <div className="flex justify-center items-center border px-3 py-1 rounded-2xl text-brand-primary border-brand-primary whitespace-nowrap">
+                <div className="flex justify-center items-center text-sm font-medium text-brand-text_lightGray border px-3 py-1 rounded-[27px] bg-brand-bg_white border-brand-primary whitespace-nowrap">
                   {data.fields.publishdate}
                 </div>
               </div>
 
-              <div className="line-clamp-3 text-sm text-gray-600">
+              <div className="line-clamp-3 text-sm text-brand-secondary leading-[24px] font-normal">
                 {data.fields.blogdescription}
               </div>
               <div className="flex justify-end text-sm font-medium text-gray-500">
                 {data.fields.author && (
-                  <div key={index} className="flex gap-4 justify-start">
-                    <div className="">
-                      <img
-                        src={
-                          data?.fields?.author[0]?.fields.authorImage.fields
-                            .file.url
-                        }
-                        className="rounded-[100%] w-[50px] h-[50px] border border-brand-border_black  bg-brand-primary"
-                      />
-                    </div>
-                    <div className="text-[24px] font-normal leading-[51px] text-brand-secondary">
+                  <div
+                    key={index}
+                    className="flex gap-4 justify-center items-center"
+                  >
+                    <img
+                      src={
+                        data?.fields?.author[0]?.fields.authorImage.fields.file
+                          .url
+                      }
+                      className="rounded-[100%] w-[64px] h-[64px]  border border-brand-border_black  bg-brand-primary"
+                    />
+                    <div className="text-[16px] font-medium leading-[51px] text-brand-secondary">
                       {data?.fields?.author[0]?.fields.authorName}
                     </div>
                   </div>
@@ -155,7 +166,7 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
         {currentPage > 1 && (
           <button
             onClick={() => handlePageChange(currentPage - 1)}
-            className="px-3 py-1 border rounded-2xl text-brand-primary border-brand-primary"
+            className="px-3 py-1 border rounded-[100%] w-[66px] h-[66px] font-medium text-[24px] text-brand-primary border-brand-primary"
           >
             &lt;
           </button>
@@ -165,9 +176,9 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
           <button
             key={page}
             onClick={() => handlePageChange(page + 1)}
-            className={`px-3 py-1 border rounded-2xl text-brand-primary border-brand-primary ${
+            className={`px-3 py-1 border rounded-[100%] w-[66px] h-[66px] text-2xl font-medium text-brand-primary border-brand-primary ${
               currentPage === page + 1
-                ? "bg-brand-secondary text-brand-text_blue"
+                ? "bg-brand-primary  text-brand-primary border-brand-border_black"
                 : ""
             }`}
           >
@@ -178,7 +189,7 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
         {currentPage < totalPages && (
           <button
             onClick={() => handlePageChange(currentPage + 1)}
-            className="px-3 py-1 border rounded-2xl text-brand-primary border-brand-primary"
+            className="px-3 py-1 border rounded-[100%] w-[66px] h-[66px] text-brand-primary font-medium text-[24px] border-brand-primary"
           >
             &gt;
           </button>
