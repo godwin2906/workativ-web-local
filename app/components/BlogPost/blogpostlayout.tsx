@@ -1,5 +1,6 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS, INLINES, Block, Inline } from "@contentful/rich-text-types";
+import BlogCta from "../CTA/blogcta";
 
 type BlogPostProps = {
   blogPost: any;
@@ -52,7 +53,11 @@ const options: any = {
   },
 };
 
-export default function BlogPostLayout({ blogPost, relatedBlogs, authorData }: BlogPostProps) {
+export default function BlogPostLayout({
+  blogPost,
+  relatedBlogs,
+  authorData,
+}: BlogPostProps) {
   const contentItems = blogPost.contentItems;
 
   return (
@@ -78,12 +83,21 @@ export default function BlogPostLayout({ blogPost, relatedBlogs, authorData }: B
               />
             )}
             <div>
-              <h3 className="text-xl font-semibold">{authorData?.authorName}</h3>
+              <h3 className="text-xl font-semibold">
+                {authorData?.authorName}
+              </h3>
               <p className="text-md">{authorData?.authorDesignation}</p>
               <p className="mt-2">{authorData?.authorDescOne}</p>
               <p className="mt-2">{authorData?.authorDescTwo}</p>
             </div>
           </div>
+        </div>
+        <div className="mt-5">
+          <BlogCta
+            title="Auto-resolve 60% of Your Employee Queries With Generative AI Chatbot & Automation."
+            buttonText="Book a Demo"
+            backgroundColor="#F7F4ED"
+          />
         </div>
 
         <div className="mt-12">
