@@ -1,7 +1,7 @@
 import React from "react";
 
 interface BlogHeaderProps {
-  blog: any; // The featured blog passed from the parent component
+  blog: any;
 }
 
 const BlogHeader: React.FC<BlogHeaderProps> = ({ blog }) => {
