@@ -4,20 +4,27 @@ import Bloghomelayout from "~/components/BlogHome/bloghomelayout";
 import client from "~/utils/contentful";
 
 export const loader: LoaderFunction = async () => {
-  const response = await client.getEntries({
+  const blogResponse = await client.getEntries({
     content_type: "blog",
+    include: 2, 
   });
 
+  const categoryResponse = await client.getEntries({
+    content_type: "categories",
+  });
 
-  return json(response.items);
+  return json({
+    blogs: blogResponse.items,
+    categories: categoryResponse.items,
+  });
 };
 
 function blog() {
-  const blogs: [] = useLoaderData();
+  const { blogs, categories }: { blogs: any[]; categories: any[] } = useLoaderData();
 
   return (
     <div>
-      <Bloghomelayout blogs={blogs} />
+      <Bloghomelayout blogs={blogs} categories={categories} />
       <Outlet />
     </div>
   );
