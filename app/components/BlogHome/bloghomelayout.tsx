@@ -47,7 +47,7 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
   }, [selectedCategory, sortedBlogs]);
 
   const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
-  const currentBlogs = useMemo(() => {
+  const currentBlogs: any = useMemo(() => {
     const firstBlogIndex = (currentPage - 1) * blogsPerPage;
     const lastBlogIndex = firstBlogIndex + blogsPerPage;
     return filteredBlogs.slice(firstBlogIndex, lastBlogIndex);
@@ -63,14 +63,11 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
 
   return (
     <div className="flex flex-col gap-12 w-full mt-5 mb-5 px-20 justify-center items-center overflow-x-hidden">
-      <BlogHeader blog={featuredBlog} />
+      <BlogHeader blog={featuredBlog} isHomeBlog={false} />
 
       <div className="flex flex-col gap-12 w-full mt-5 mb-5 px-20 justify-center items-center overflow-x-hidden">
         {categoryChunks.map((chunk, index) => (
-          <div
-            key={index}
-            className="flex gap-4 w-full justify-center items-center"
-          >
+          <div key={index} className="flex gap-4 w-full">
             {chunk.map((category: any, categoryIndex: number) => (
               <button
                 key={categoryIndex}
@@ -106,7 +103,7 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
             </div>
 
             <div className="flex flex-col justify-between flex-1 gap-4 px-5 py-3">
-              <div className="font-bold text-lg line-clamp-3">
+              <div className="font-bold text-lg line-clamp-2">
                 {data.fields.blogtitle}
               </div>
 
@@ -118,7 +115,7 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
                         key={index}
                         className="border rounded-2xl px-3 py-1 border-brand-primary text-brand-primary bg-brand-primary w-fit"
                       >
-                        {category.fields.name}
+                        {category.fields.displayName}
                       </div>
                     )
                   )}
@@ -132,7 +129,22 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
                 {data.fields.blogdescription}
               </div>
               <div className="flex justify-end text-sm font-medium text-gray-500">
-                {data.fields.authorname}
+                {data.fields.author && (
+                  <div key={index} className="flex gap-4 justify-start">
+                    <div className="">
+                      <img
+                        src={
+                          data?.fields?.author[0]?.fields.authorImage.fields
+                            .file.url
+                        }
+                        className="rounded-[100%] w-[50px] h-[50px] border border-brand-border_black  bg-brand-primary"
+                      />
+                    </div>
+                    <div className="text-[24px] font-normal leading-[51px] text-brand-secondary">
+                      {data?.fields?.author[0]?.fields.authorName}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
