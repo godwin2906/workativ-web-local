@@ -1,6 +1,7 @@
-import React, { useState } from "react";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS, INLINES, Block, Inline } from "@contentful/rich-text-types";
+import BlogCta from "../CTA/blogcta";
+import TableOfContents from "../TOC/toc";
 
 type ContentItem = {
   subtitle: string;
@@ -16,6 +17,15 @@ type BlogPostProps = {
       blogtitle: string;
       blogurl: string;
       image?: { fields: { file: { url: string } } };
+      categories?: Array<{ fields: { displayName: string } }>;
+      publishdate?: string;
+      blogdescription?: string;
+      author?: Array<{
+        fields: {
+          authorName: string;
+          authorImage?: { fields: { file: { url: string } } };
+        };
+      }>;
     };
     sys: { id: string };
   }>;
@@ -60,57 +70,6 @@ const options: any = {
   },
 };
 
-const TableOfContents: React.FC<{ contentItems: ContentItem[] }> = ({
-  contentItems,
-}) => {
-  const [isOpen, setIsOpen] = useState(true);
-
-  return (
-    <div className="border border-blue-500 rounded-lg bg-white">
-      {/* Header Section */}
-      <div
-        className="flex justify-between items-center p-4 border-b border-blue-500 cursor-pointer"
-        onClick={() => setIsOpen(!isOpen)}
-        aria-expanded={isOpen}
-        role="button"
-      >
-        <h3 className="text-blue-500 font-semibold text-lg">In this Blog</h3>
-        <span
-          className={`text-blue-500 transform ${
-            isOpen ? "rotate-180" : ""
-          } transition-transform`}
-        >
-          ⌄
-        </span>
-      </div>
-
-      {/* Content Section */}
-      {isOpen && (
-        <ul
-          className="p-4 overflow-y-auto"
-          style={{
-            maxHeight: "200px", // Set the height of the box
-          }}
-        >
-          {contentItems.map((item, index) =>
-            item.subtitle !== "Introduction" ? (
-              <li key={index} className="mb-2">
-                <a
-                  href={`#subtitle-${index}`}
-                  className="text-blue-500 hover:underline"
-                >
-                  {item.subtitle}
-                </a>
-              </li>
-            ) : null
-          )}
-        </ul>
-      )}
-    </div>
-  );
-};
-
-
 export default function BlogPostLayout({
   blogPost,
   relatedBlogs,
@@ -119,73 +78,147 @@ export default function BlogPostLayout({
   const contentItems = blogPost.contentItems;
 
   return (
-    <div className="flex">
-      {/* Main Content */}
-      <div className="w-3/4 p-4">
-        {contentItems.map((item, index) => (
-          <div key={index} id={`subtitle-${index}`}>
-            {item.subtitle !== "Introduction" && (
-              <h3 className="text-2xl font-semibold">{item.subtitle}</h3>
-            )}
-            <div>{documentToReactComponents(item.content, options)}</div>
-          </div>
-        ))}
+    <section>
+      <div className="flex">
+        <div className="w-3/4 p-4">
+          {contentItems.map((item, index) => (
+            <div key={index} id={`subtitle-${index}`}>
+              {item.subtitle !== "Introduction" && (
+                <h3 className="text-2xl font-semibold">{item.subtitle}</h3>
+              )}
+              <div>{documentToReactComponents(item.content, options)}</div>
+            </div>
+          ))}
 
-        {/* Author Section */}
-        <div className="mt-12">
-          <h2 className="text-2xl font-semibold mb-4">About the Author</h2>
-          <div className="flex items-center">
-            {authorData?.authorImage && (
-              <img
-                src={authorData?.authorImage.fields?.file?.url}
-                alt={authorData?.authorName}
-                className="w-16 h-16 rounded-full mr-4"
-              />
-            )}
-            <div>
-              <h3 className="text-xl font-semibold">{authorData?.authorName}</h3>
-              <p className="text-md">{authorData?.authorDesignation}</p>
-              <p className="mt-2">{authorData?.authorDescOne}</p>
-              <p className="mt-2">{authorData?.authorDescTwo}</p>
+          <div
+            className="mt-12 p-6 rounded-xl border-2"
+            style={{
+              backgroundColor: "#f9f9f9",
+              borderColor: "#0000FF",
+            }}
+          >
+            <div className="flex items-center">
+              {authorData?.authorImage && (
+                <div className="w-4/12 rounded-full bg-white flex items-center justify-center mr-6 border-2 border-black">
+                  <img
+                    src={authorData?.authorImage.fields?.file?.url}
+                    alt={authorData?.authorName}
+                    className="object-cover rounded-full"
+                  />
+                </div>
+              )}
+              <div>
+                <h3 className="text-2xl font-bold mb-1">
+                  {authorData?.authorName}
+                </h3>
+                <p className="text-lg font-medium text-gray-600 mb-4">
+                  {authorData?.authorDesignation}
+                </p>
+                <p className="text-md text-gray-800 leading-relaxed">
+                  {authorData?.authorDescOne}
+                </p>
+                <p className="text-md text-gray-800 leading-relaxed mt-2">
+                  {authorData?.authorDescTwo}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-5">
+            <BlogCta
+              title="Auto-resolve 60% of Your Employee Queries With Generative AI Chatbot & Automation."
+              buttonText="Book a Demo"
+              backgroundColor="#F7F4ED"
+            />
+          </div>
+
+          <div className="mt-12">
+            <h2 className="text-2xl font-semibold mb-6">Read More</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 w-full justify-center items-center">
+              {relatedBlogs.map((blog, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col w-full min-h-[500px] max-h-[37rem] border border-brand-border_blue rounded-[27px] shadow-[0px_4px_0px_0px_#1C5CFF]"
+                >
+                  {/* Blog Image */}
+                  <div className="bg-brand-card rounded-tl-[26px] rounded-tr-[26px] border border-brand-card flex items-center justify-center h-[300px]">
+                    {blog.fields.image ? (
+                      <img
+                        src={blog.fields.image.fields.file.url}
+                        alt={blog.fields.blogtitle}
+                        className="object-cover w-full h-full rounded-tl-[26px] rounded-tr-[26px]"
+                      />
+                    ) : (
+                      <span className="text-gray-500 text-center">
+                        No Image Available
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Blog Details */}
+                  <div className="flex flex-col justify-between flex-1 gap-3 px-10 py-5">
+                    {/* Blog Title */}
+                    <div className="font-bold text-[20px] leading-[25px] line-clamp-2">
+                      {blog.fields.blogtitle}
+                    </div>
+
+                    {/* Blog Categories and Publish Date */}
+                    <div className="flex justify-between items-center">
+                      <div className="flex gap-2">
+                        {blog.fields.categories?.map(
+                          (category, categoryIndex) => (
+                            <div
+                              key={categoryIndex}
+                              className="border rounded-[15px] px-3 py-1 border-brand-primary text-brand-primary bg-brand-primary w-fit text-[15px] font-medium"
+                            >
+                              {category.fields.displayName}
+                            </div>
+                          )
+                        )}
+                      </div>
+                      <div className="flex justify-center items-center text-sm font-medium text-brand-text_lightGray border px-3 py-1 rounded-[27px] bg-brand-bg_white border-brand-primary whitespace-nowrap">
+                        {blog.fields.publishdate || "No Date"}
+                      </div>
+                    </div>
+
+                    {/* Blog Description */}
+                    <div className="line-clamp-3 text-sm text-brand-secondary leading-[24px] font-normal">
+                      {blog.fields.blogdescription ||
+                        "No Description Available"}
+                    </div>
+
+                    {/* Blog Author */}
+                    <div className="flex justify-end text-sm font-medium text-gray-500">
+                      {blog.fields.author && (
+                        <div className="flex gap-4 justify-center items-center">
+                          {blog.fields.author[0]?.fields.authorImage && (
+                            <img
+                              src={
+                                blog.fields.author[0]?.fields.authorImage.fields
+                                  .file.url
+                              }
+                              alt={blog.fields.author[0]?.fields.authorName}
+                              className="rounded-full w-[64px] h-[64px] border border-brand-border_black bg-brand-primary"
+                            />
+                          )}
+                          <div className="text-[16px] font-medium leading-[51px] text-brand-secondary">
+                            {blog.fields.author[0]?.fields.authorName ||
+                              "Unknown Author"}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Related Blogs Section */}
-        <div className="mt-12">
-          <h2 className="text-2xl font-semibold mb-4">Read More</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {relatedBlogs.map((blog) => (
-              <div
-                key={blog.sys.id}
-                className="border rounded-lg p-4 hover:shadow-lg transition"
-              >
-                {blog.fields.image && (
-                  <img
-                    src={blog.fields.image.fields.file.url}
-                    alt={blog.fields.blogtitle}
-                    className="w-full h-40 object-cover rounded-t-lg"
-                  />
-                )}
-                <h3 className="mt-4 text-lg font-semibold">
-                  {blog.fields.blogtitle}
-                </h3>
-                <a
-                  href={`/blog/${blog.fields.blogurl}`}
-                  className="text-blue-500 hover:underline mt-2 block"
-                >
-                  Read More
-                </a>
-              </div>
-            ))}
-          </div>
+        <div className="w-1/4 p-4">
+          <TableOfContents contentItems={contentItems} />
         </div>
       </div>
-
-      {/* Table of Contents */}
-      <div className="w-1/4 p-4 border-l">
-        <TableOfContents contentItems={contentItems} />
-      </div>
-    </div>
+    </section>
   );
 }

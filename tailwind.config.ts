@@ -22,6 +22,7 @@ export default {
           secondary: "#21243D",
           text_blue: "#1C5CFF",
           text_gray: "#A49D9D",
+          text_lightGray:"#666"
         },
       },
       backgroundColor: {

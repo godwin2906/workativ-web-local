@@ -43,8 +43,16 @@ type LoaderData = {
     fields: {
       blogtitle: string;
       blogurl: string;
-      categories: Category[] | null;
       image?: { fields: { file: { url: string } } };
+      categories?: Array<{ fields: { displayName: string } }>;
+      publishdate?: string;
+      blogdescription?: string;
+      author?: Array<{
+        fields: {
+          authorName: string;
+          authorImage?: { fields: { file: { url: string } } };
+        };
+      }>;
     };
     sys: { id: string };
   }>;
@@ -122,7 +130,6 @@ export const loader: LoaderFunction = async ({ params }) => {
   });
 };
 
-
 export default function BlogSlug() {
   const { currentBlog, relatedBlogs } = useLoaderData<LoaderData>();
 
@@ -131,7 +138,7 @@ export default function BlogSlug() {
       <BlogPostLayout
         blogPost={currentBlog}
         relatedBlogs={relatedBlogs}
-        authorData={currentBlog.authorData} 
+        authorData={currentBlog.authorData}
       />
     </div>
   );
