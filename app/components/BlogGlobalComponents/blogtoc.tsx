@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { ChevronDown } from "lucide-react";
 
 const TableOfContents: React.FC<{ contentItems: any }> = ({ contentItems }) => {
   const [isOpen, setIsOpen] = useState(true);
@@ -6,7 +7,7 @@ const TableOfContents: React.FC<{ contentItems: any }> = ({ contentItems }) => {
   return (
     <div className="border border-blue-500 rounded-lg bg-white">
       <div
-        className="flex justify-between items-center p-4 border-b border-blue-500 cursor-pointer"
+        className="flex justify-between items-center p-4 border-b-0 cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         role="button"
@@ -15,15 +16,15 @@ const TableOfContents: React.FC<{ contentItems: any }> = ({ contentItems }) => {
         <span
           className={`text-blue-500 transform ${
             isOpen ? "rotate-180" : ""
-          } transition-transform`}
+          } transition-transform duration-[600ms] ease-in-out`}
         >
-          ⌄
+          <ChevronDown />
         </span>
       </div>
 
       {isOpen && (
         <ul
-          className="p-4 overflow-y-auto"
+          className="p-4 border-t border-neutral-400 toc-blog-scroll overflow-y-auto scroll-smooth"
           style={{
             maxHeight: "200px",
           }}
@@ -31,17 +32,7 @@ const TableOfContents: React.FC<{ contentItems: any }> = ({ contentItems }) => {
           {contentItems.map(
             (
               item: {
-                subtitle:
-                  | string
-                  | number
-                  | boolean
-                  | React.ReactElement<
-                      any,
-                      string | React.JSXElementConstructor<any>
-                    >
-                  | Iterable<React.ReactNode>
-                  | null
-                  | undefined;
+                subtitle: string;
               },
               index: React.Key | null | undefined
             ) =>

@@ -22,7 +22,9 @@ export default {
           secondary: "#21243D",
           text_blue: "#1C5CFF",
           text_gray: "#A49D9D",
-          text_lightGray:"#666"
+          text_lightGray: "#666",
+
+          text_white: "#FFF",
         },
       },
       backgroundColor: {
@@ -31,6 +33,7 @@ export default {
           secondary: "#EDF1F9",
           card: "#F4F3F3",
           bg_white: "#FFFFFF",
+          bg_blue: "#1C5CFF",
         },
       },
       borderColor: {
