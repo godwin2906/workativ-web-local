@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import BlogHeader from "../BlogComp/blogheader";
-import bgImg from "../../Images/Ellipse.png";
 import cateory from "../../Images/category.svg";
+import { Link } from "@remix-run/react";
 
 interface BlogListProps {
   blogs: any[];
@@ -101,58 +101,60 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
         {currentBlogs.map((data: any, index: number) => (
           <div
             key={index}
-            className="flex flex-col w-full min-h-[500px] max-h-[37rem] maxgap-5 border border-brand-border_blue rounded-[27px] shadow-[0px_4px_0px_0px_#1C5CFF]"
+            className="flex flex-col w-full transform transition-transform duration-200 hover:-translate-y-3 border border-brand-border_blue rounded-[27px] shadow-[0px_4px_0px_0px_#1C5CFF]"
           >
-            <div className="bg-brand-card rounded-tl-[26px] rounded-tr-[26px] border border-brand-card flex items-center justify-center h-[300px]">
-              <img src={cateory} />
-            </div>
-
-            <div className="flex flex-col justify-between flex-1 gap-3 px-10 py-5">
-              <div className="font-bold text-[20px] leading-[25px] line-clamp-2">
-                {data.fields.blogtitle}
+            <Link to={`/blog/${data.fields?.blogurl}`}>
+              <div className="bg-brand-card rounded-tl-[26px] rounded-tr-[26px] border border-brand-card flex items-center justify-center min-h-[300px]">
+                <img src={cateory} />
               </div>
 
-              <div className="flex justify-between items-center">
-                <div className="flex gap-2">
-                  {data.fields.categories.map(
-                    (category: any, index: number) => (
-                      <div
-                        key={index}
-                        className="border rounded-[15px] px-3 py-1 border-brand-primary text-brand-primary bg-brand-primary w-fit text-[15px] font-medium"
-                      >
-                        {category.fields.displayName}
+              <div className="flex flex-col justify-between flex-1 gap-3 px-10 py-5">
+                <div className="font-bold text-[20px] leading-[25px] line-clamp-2">
+                  {data.fields.blogtitle}
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <div className="flex gap-2">
+                    {data.fields.categories.map(
+                      (category: any, index: number) => (
+                        <div
+                          key={index}
+                          className="border rounded-[15px] px-3 py-1 border-brand-primary text-brand-primary bg-brand-primary w-fit text-[15px] font-medium"
+                        >
+                          {category.fields.displayName}
+                        </div>
+                      )
+                    )}
+                  </div>
+                  <div className="flex justify-center items-center text-sm font-medium text-brand-text_lightGray border px-3 py-1 rounded-[27px] bg-brand-bg_white border-brand-primary whitespace-nowrap">
+                    {data.fields.publishdate}
+                  </div>
+                </div>
+
+                <div className="line-clamp-3 text-sm text-brand-secondary leading-[24px] font-normal">
+                  {data.fields.blogdescription}
+                </div>
+                <div className="flex justify-end text-sm font-medium text-gray-500">
+                  {data.fields.author && (
+                    <div
+                      key={index}
+                      className="flex gap-4 justify-center items-center"
+                    >
+                      <img
+                        src={
+                          data?.fields?.author[0]?.fields.authorImage.fields
+                            .file.url
+                        }
+                        className="rounded-[100%] w-[64px] h-[64px]  border border-brand-border_black  bg-brand-primary"
+                      />
+                      <div className="text-[16px] font-medium leading-[51px] text-brand-secondary">
+                        {data?.fields?.author[0]?.fields.authorName}
                       </div>
-                    )
+                    </div>
                   )}
                 </div>
-                <div className="flex justify-center items-center text-sm font-medium text-brand-text_lightGray border px-3 py-1 rounded-[27px] bg-brand-bg_white border-brand-primary whitespace-nowrap">
-                  {data.fields.publishdate}
-                </div>
               </div>
-
-              <div className="line-clamp-3 text-sm text-brand-secondary leading-[24px] font-normal">
-                {data.fields.blogdescription}
-              </div>
-              <div className="flex justify-end text-sm font-medium text-gray-500">
-                {data.fields.author && (
-                  <div
-                    key={index}
-                    className="flex gap-4 justify-center items-center"
-                  >
-                    <img
-                      src={
-                        data?.fields?.author[0]?.fields.authorImage.fields.file
-                          .url
-                      }
-                      className="rounded-[100%] w-[64px] h-[64px]  border border-brand-border_black  bg-brand-primary"
-                    />
-                    <div className="text-[16px] font-medium leading-[51px] text-brand-secondary">
-                      {data?.fields?.author[0]?.fields.authorName}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
+            </Link>
           </div>
         ))}
       </div>
@@ -195,3 +197,4 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
 };
 
 export default BlogList;
+  

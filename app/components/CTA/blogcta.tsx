@@ -23,8 +23,8 @@ const BlogCta: React.FC<BlogCtaMProps> = ({
           {buttonText}
         </button>
       </div>
-      <div className="w-[300px] h-[150px] bg-cover bg-right rounded-lg">
-        <img src={CtaIMg} alt="cta" />
+      <div className="bg-cover bg-right rounded-lg">
+        <img src={CtaIMg} alt="cta" className="w-[300px] h-[150px]" />
       </div>
     </div>
   );
