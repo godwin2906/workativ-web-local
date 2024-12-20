@@ -1,5 +1,5 @@
 import React from "react";
-import CtaIMg from "../../Images/CTAImg.png";
+import ctaImage from "../../assets/blogImages/CTAImg.png";
 
 interface BlogCtaMProps {
   title: string;
@@ -23,8 +23,8 @@ const BlogCta: React.FC<BlogCtaMProps> = ({
           {buttonText}
         </button>
       </div>
-      <div className="w-[300px] h-[150px] bg-cover bg-right rounded-lg">
-        <img src={CtaIMg} alt="cta" />
+      <div className="bg-cover bg-right rounded-lg">
+        <img src={ctaImage} alt="cta" className="w-[300px] h-[150px]" />
       </div>
     </div>
   );
