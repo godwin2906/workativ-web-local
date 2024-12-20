@@ -1,0 +1,732 @@
+[
+  {
+    "blogtitle": "The Power of Self-Service: Empowering Employees with a Private ChatGPT",
+    "publishdate": "2024-12-06",
+    "blogdescription": "A private ChatGPT is a GPT-based chatbot or chat interface that exhibits ChatGPT-like qualities to provide personal or tailor-made solutions to users unavailable with public solutions.",
+    "blogurl": "the-power-of-self-service-empowering-employees-with-a-private-chatgpt",
+    "categories": [
+      {
+        "name": "hr",
+        "displayName": "HR Support",
+        "heroImage": [
+          {
+            "title": "blog header 7",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/puTo8fWR7eWUGGe1bWZcv/aff4c8aafcd854c86988852bf1afd7e3/blog_header_7.png",
+              "details": {
+                "size": 61041,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_7.png",
+              "contentType": "image/png"
+            }
+          },
+          {
+            "title": "blog header 8",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/3murDvkwJwx8TINRjAv899/10911897fff743df8b5dacdf7b5f6d93/blog_header_8.png",
+              "details": {
+                "size": 28784,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_8.png",
+              "contentType": "image/png"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "blogtitle": "Generative AI Revolution: Reshaping the Future of IT Ticketing Systems",
+    "publishdate": "2024-12-08",
+    "blogdescription": "The ability to generate coherent recommendations, surface information from all over the internet or internal systems, and learn from interactions and history makes Generative AI an effective tool for CIOs to tackle ticket backlogs, agent productivity issues, and user experience management.",
+    "blogurl": "generative-ai-revolution-reshaping-the-future-of-it-ticketing-systems",
+    "categories": [
+      {
+        "name": "chatbot",
+        "displayName": "Chatbot",
+        "heroImage": [
+          {
+            "title": "blog header 13",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/1CcxCfrdGb8ruyD4cuUyH7/ae9833e0f6fa32de9912c057e473f9a9/blog_header_13.png",
+              "details": {
+                "size": 42943,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_13.png",
+              "contentType": "image/png"
+            }
+          },
+          {
+            "title": "blog header 14",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/53JbT89qQil6nLguCEaHU1/e5842be82f5bddefa46720f0b7b1712f/blog_header_14.png",
+              "details": {
+                "size": 15054,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_14.png",
+              "contentType": "image/png"
+            }
+          }
+        ]
+      },
+      {
+        "name": "it",
+        "displayName": "IT Support",
+        "heroImage": [
+          {
+            "title": "blog header 10",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/3IPj6FD0RgMpkiYUngmkzA/4728b18cdf255afc74acb88bfcc8a5e2/blog_header_10.png",
+              "details": {
+                "size": 47686,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_10.png",
+              "contentType": "image/png"
+            }
+          },
+          {
+            "title": "blog header 11",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/2qWkmIzxkzKA1Ph5Y4bG5b/6840d08232d58fab987f5122a20476bd/blog_header_11.png",
+              "details": {
+                "size": 61070,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_11.png",
+              "contentType": "image/png"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "blogtitle": "Retrieval-Augmented Generation (RAG): Beginners Guide",
+    "publishdate": "2024-12-10",
+    "blogdescription": "RAG, or Retrieval Augmented Generation, is an AI framework or a search retrieval process that optimizes large language model-generated responses by referencing authoritative data from external sources and providing augmented contexts for LLM answers to ensure relevancy and accuracy.",
+    "blogurl": "retrieval-augmented-generation-rag-beginners-guide",
+    "categories": [
+      {
+        "name": "conai",
+        "displayName": "Conversational AI",
+        "heroImage": [
+          {
+            "title": "blog header 2",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/2v1y2HV20vaOT8WpiqYmm1/467d570dbd50cfa3dc1d17dd94d90961/blog_header_2.png",
+              "details": {
+                "size": 66092,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_2.png",
+              "contentType": "image/png"
+            }
+          },
+          {
+            "title": "blog header 9",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/6UIhiFhCfTYl7kk45Ia57d/5c2e5d160e815cc96ccc2b17e0fb423c/blog_header_9.png",
+              "details": {
+                "size": 36075,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_9.png",
+              "contentType": "image/png"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "blogtitle": "How is Knowledge AI Shaping the Future of Knowledge Management?",
+    "publishdate": "2024-12-12",
+    "blogdescription": "This is where AI comes in to save you.\nIn this blog, we discuss the challenges in traditional knowledge management systems and how AI addresses them, helping you use your company’s information to its full potential.",
+    "blogurl": "how-is-knowledge-ai-shaping-the-future-of-knowledge-management",
+    "categories": [
+      {
+        "name": "hr",
+        "displayName": "HR Support",
+        "heroImage": [
+          {
+            "title": "blog header 7",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/puTo8fWR7eWUGGe1bWZcv/aff4c8aafcd854c86988852bf1afd7e3/blog_header_7.png",
+              "details": {
+                "size": 61041,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_7.png",
+              "contentType": "image/png"
+            }
+          },
+          {
+            "title": "blog header 8",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/3murDvkwJwx8TINRjAv899/10911897fff743df8b5dacdf7b5f6d93/blog_header_8.png",
+              "details": {
+                "size": 28784,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_8.png",
+              "contentType": "image/png"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "blogtitle": "How Generative AI is changing IT support operations analytics?",
+    "publishdate": "2024-12-13",
+    "blogdescription": "Every service desk leader understands the value of automation and data-driven analytics, potentially bringing operational excellence and more granular visibility for optimizing future service delivery.",
+    "blogurl": "how-generative-ai-is-changing-it-support-operations-analytics",
+    "categories": [
+      {
+        "name": "it",
+        "displayName": "IT Support",
+        "heroImage": [
+          {
+            "title": "blog header 10",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/3IPj6FD0RgMpkiYUngmkzA/4728b18cdf255afc74acb88bfcc8a5e2/blog_header_10.png",
+              "details": {
+                "size": 47686,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_10.png",
+              "contentType": "image/png"
+            }
+          },
+          {
+            "title": "blog header 11",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/2qWkmIzxkzKA1Ph5Y4bG5b/6840d08232d58fab987f5122a20476bd/blog_header_11.png",
+              "details": {
+                "size": 61070,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_11.png",
+              "contentType": "image/png"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "blogtitle": "Burned Out Employee Support Teams? Here's How Automation and GenAI Can Help",
+    "publishdate": "2024-12-14",
+    "blogdescription": "The need to constantly look for IT support to get help and be able to work their best adds to the growing volume of tickets.Compounding the stress for helpdesk teams are live chats and phone calls.",
+    "blogurl": "burned-out-employee-support-teams-heres-how-automation-and-genai-can-help",
+    "categories": [
+      {
+        "name": "chatbot",
+        "displayName": "Chatbot",
+        "heroImage": [
+          {
+            "title": "blog header 13",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/1CcxCfrdGb8ruyD4cuUyH7/ae9833e0f6fa32de9912c057e473f9a9/blog_header_13.png",
+              "details": {
+                "size": 42943,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_13.png",
+              "contentType": "image/png"
+            }
+          },
+          {
+            "title": "blog header 14",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/53JbT89qQil6nLguCEaHU1/e5842be82f5bddefa46720f0b7b1712f/blog_header_14.png",
+              "details": {
+                "size": 15054,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_14.png",
+              "contentType": "image/png"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "blogtitle": "Building a Collaborative ITSM Ecosystem: MS Teams, Gen AI, and Human Touch",
+    "publishdate": "2024-12-15",
+    "blogdescription": "However, a collaborative ITSM ecosystem can enable comprehensive service delivery and user experience. This ecosystem enables end-to-end communications and coordination across value chains, self-service for real-time issue mitigation, agent efficiency for critical problems, enhanced customer experiences, and business success.\n",
+    "blogurl": "building-a-collaborative-itsm-ecosystem-ms-teams-gen-ai-and-human-touch",
+    "categories": [
+      {
+        "name": "knowai",
+        "displayName": "Knowledge AI",
+        "heroImage": [
+          {
+            "title": "blog header 5",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/K6BjnRK3sSOylNMKWPpuN/aa10ec86e279de3a6429f423fefc6866/blog_header_5.png",
+              "details": {
+                "size": 26007,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_5.png",
+              "contentType": "image/png"
+            }
+          },
+          {
+            "title": "blog header 3",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/4H7C5zoSe4hInKvpaQzcET/9495c70344b378597d631eca23d25861/blog_header_3.png",
+              "details": {
+                "size": 55453,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_3.png",
+              "contentType": "image/png"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "blogtitle": "Cutting Costs, Maximizing Gains: How Employee Support Automation Optimizes IT Spending",
+    "publishdate": "2024-12-16",
+    "blogdescription": "Zendesk claimed in their report that AI’s transformative effects will be felt widely by 2027. Human agents, IT leaders, and admins will have different roles and responsibilities than they ought to in a traditional setting. For a business, this can mean leaner and more efficient teams that can handle more queries, help free up agents, and save costs.",
+    "blogurl": "optimize-it-operations-cost",
+    "content": [
+      {
+        "subtitle": "Introduction",
+        "content": {
+          "nodeType": "document",
+          "data": {},
+          "content": [
+            {
+              "nodeType": "paragraph",
+              "data": {},
+              "content": [
+                {
+                  "nodeType": "text",
+                  "value": "Zendesk claimed in their ",
+                  "marks": [],
+                  "data": {}
+                },
+                {
+                  "nodeType": "hyperlink",
+                  "data": {
+                    "uri": "https://cxtrends.zendesk.com/ai"
+                  },
+                  "content": [
+                    {
+                      "nodeType": "text",
+                      "value": "report",
+                      "marks": [],
+                      "data": {}
+                    }
+                  ]
+                },
+                {
+                  "nodeType": "text",
+                  "value": " that AI’s transformative effects will be felt widely by 2027. Human agents, IT leaders, and admins will have different roles and responsibilities than they ought to in a traditional setting. For a business, this can mean leaner and more efficient teams that can handle more queries, help free up agents, and save costs. \n\nAdditionally, 77% of CX leaders think traditional CX will give in to radically different industry dynamics. It is evident that employee experience can expect this radical shift and tap into the potential of Generative AI to automate routine and even complex tasks, empower human expertise, and boost employee experience. The bigger picture of Generative AI-powered employee support automation is that it drives cost efficiency and helps optimize IT spending. \n\nLet’s explore how to reduce employee support costs, maximize gains, or improve service desk ROI. ",
+                  "marks": [],
+                  "data": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "subtitle": "Why is IT spending for service desks a growing concern?",
+        "content": {
+          "nodeType": "document",
+          "data": {},
+          "content": [
+            {
+              "nodeType": "paragraph",
+              "data": {},
+              "content": [
+                {
+                  "nodeType": "text",
+                  "value": "As of May 2024, the shift to hybrid and remote work requires flexible work arrangements. Companies could invest quite a lot in this aspect, such as tools and applications for employee engagement and productivity, but that is not the sole area of IT spending. \n\nThe flexible work arrangements also call for seamless employee support, either for remote or hybrid employees. So, whether you want it or not, there is a growing burden of IT spending for service desks. Notably, the CIOs annual budget for IT spending sh \n\nThe stats from ",
+                  "marks": [],
+                  "data": {}
+                },
+                {
+                  "nodeType": "hyperlink",
+                  "data": {
+                    "uri": "https://www.thinkhdi.com/library/supportworld/2021/understanding-cost-per-ticket"
+                  },
+                  "content": [
+                    {
+                      "nodeType": "text",
+                      "value": "HDI",
+                      "marks": [],
+                      "data": {}
+                    }
+                  ]
+                },
+                {
+                  "nodeType": "text",
+                  "value": " 2021 are a mental jolt for you as they highlight the pain of expedited service desk costs, which leads to high IT spending. They include, ",
+                  "marks": [],
+                  "data": {}
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "categories": [
+      {
+        "name": "employeesupport",
+        "displayName": "Employee Support",
+        "heroImage": [
+          {
+            "title": "blog header 4",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/2QH4gp7atBPz5PrVhYFSpe/e48672a4d2a38cb120b65df5c3235365/blog_header_4.png",
+              "details": {
+                "size": 26481,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_4.png",
+              "contentType": "image/png"
+            }
+          },
+          {
+            "title": "blog header 12",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/6cUARyR2PdVpohADTlFXJK/5ad9afd04df65880d7824334915deead/blog_header_12.png",
+              "details": {
+                "size": 54174,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_12.png",
+              "contentType": "image/png"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "blogtitle": "Hidden Costs of Manual Ticket Resolution: Why IT Directors Need Gen AI and Automation",
+    "publishdate": "2024-12-17",
+    "blogdescription": "Discover how manual ticket resolution impacts employee support costs and why IT directors should adopt Gen AI and automation for faster, more efficient IT issue resolution.",
+    "blogurl": "hidden-cost-manual-ticket-resolution-it-directors-gen-ai-automation",
+    "content": [
+      {
+        "subtitle": "Introduction",
+        "content": {
+          "nodeType": "document",
+          "data": {},
+          "content": [
+            {
+              "nodeType": "paragraph",
+              "data": {},
+              "content": [
+                {
+                  "nodeType": "text",
+                  "value": "What’s not on paper does not mean that they are unquantifiable. The total cost of ownership is only visible with your ",
+                  "marks": [],
+                  "data": {}
+                },
+                {
+                  "nodeType": "hyperlink",
+                  "data": {
+                    "uri": "https://workativ.com/conversational-ai-platform/traditional-support"
+                  },
+                  "content": [
+                    {
+                      "nodeType": "text",
+                      "value": "traditional service desks.",
+                      "marks": [],
+                      "data": {}
+                    }
+                  ]
+                },
+                {
+                  "nodeType": "text",
+                  "value": " Does this mean you can view every aspect of your service desk spending? Certainly not. There are hidden costs beyond TCO, which you cannot see– they are likely hidden beneath how your service desks unleash too many efforts to expedite ticket resolutions manually. ",
+                  "marks": [],
+                  "data": {}
+                }
+              ]
+            },
+            {
+              "nodeType": "paragraph",
+              "data": {},
+              "content": [
+                {
+                  "nodeType": "text",
+                  "value": "Additionally, 77% of CX leaders think traditional CX will give in to radically different industry dynamics. It is evident that employee experience can expect this radical shift and tap into the potential of Generative AI to automate routine and even complex tasks, empower human expertise, and boost employee experience. The bigger picture of Generative AI-powered employee support automation is that it drives cost efficiency and helps optimize IT spending. ",
+                  "marks": [],
+                  "data": {}
+                }
+              ]
+            },
+            {
+              "nodeType": "paragraph",
+              "data": {},
+              "content": [
+                {
+                  "nodeType": "text",
+                  "value": "Let’s explore how to reduce employee support costs, maximize gains, or improve service desk ROI. ",
+                  "marks": [],
+                  "data": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "subtitle": "What are the reasons for the hidden costs of manual ticket resolutions in your service desks?",
+        "content": {
+          "nodeType": "document",
+          "data": {},
+          "content": [
+            {
+              "nodeType": "paragraph",
+              "data": {},
+              "content": [
+                {
+                  "nodeType": "text",
+                  "value": "The service desk incurs high costs when it runs on legacy systems or paper-based manual exercises—a familiar norm for traditional service desks. Due to the lack of service desk automation, the cost per ticket ranges between $75 and $600 when escalated to the higher tiers. But that’s only the surface-level view of the hidden costs of manual ticket resolutions. It has many sides, which can be more painful and strain your bottom line. ",
+                  "marks": [],
+                  "data": {}
+                }
+              ]
+            },
+            {
+              "nodeType": "heading-3",
+              "data": {},
+              "content": [
+                {
+                  "nodeType": "text",
+                  "value": "Legacy infrastructure and operational inefficiencies",
+                  "marks": [],
+                  "data": {}
+                }
+              ]
+            },
+            {
+              "nodeType": "paragraph",
+              "data": {},
+              "content": [
+                {
+                  "nodeType": "text",
+                  "value": "Most service desk tools follow a legacy approach. This means they consist of cumbersome user interfaces for service desk agents, requiring them to toggle between several tabs and modules to handle and resolve a query. Your agents spend a lot of time getting context and coming to a conclusion. Due to the inefficient agent interfaces, legacy tools lead to poor experience and operational inefficiencies, increasing the volume of tickets and costs. \n",
+                  "marks": [],
+                  "data": {}
+                }
+              ]
+            },
+            {
+              "nodeType": "paragraph",
+              "data": {},
+              "content": [
+                {
+                  "nodeType": "text",
+                  "value": "",
+                  "marks": [],
+                  "data": {}
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "categories": [
+      {
+        "name": "genai",
+        "displayName": "Generative AI",
+        "heroImage": [
+          {
+            "title": "blog header 1",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/2xySyLPekRIbMhk3J8a9wn/c31a812fd7f6ad218a603d57d773818a/blog_header_1.png",
+              "details": {
+                "size": 47539,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_1.png",
+              "contentType": "image/png"
+            }
+          },
+          {
+            "title": "blog header 6",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/1BXqKk3GKbdZUBDkpC9xb8/79980b65adc88e611fabe73fc5444fa9/blog_header_6.png",
+              "details": {
+                "size": 50200,
+                "image": {
+                  "width": 1444,
+                  "height": 1436
+                }
+              },
+              "fileName": "blog_header_6.png",
+              "contentType": "image/png"
+            }
+          }
+        ]
+      }
+    ],
+    "author": [
+      {
+        "authorName": "Deepa Majumder",
+        "authorDescOne": "Deepa Majumder is a writer who nails the art of crafting bespoke thought leadership articles to help business leaders tap into rich insights in their journey of organization-wide digital transformation. Over the years, she has dedicatedly engaged herself in the process of continuous learning and development across business continuity management and organizational resilience.",
+        "authorDescTwo": "Her pieces intricately highlight the best ways to transform employee and customer experience. When not writing, she spends time on leisure activities.\n",
+        "authorDesignation": "Senior content writer",
+        "authorImage": {
+          "title": "deepa",
+          "file": {
+            "url": "//images.ctfassets.net/8lwhqpgztrkz/1jNqz5k7uJb9XwJZJ5ldGb/876a3f0722433a449729d71c30cae086/deepa.png",
+            "details": {
+              "size": 95342,
+              "image": {
+                "width": 340,
+                "height": 340
+              }
+            },
+            "fileName": "deepa.png",
+            "contentType": "image/png"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "blogtitle": "How Employee IT Support Automation Creates a Frictionless Digital Workplace",
+    "publishdate": "2024-12-18",
+    "blogdescription": "Most companies still prefer legacy and traditional IT support to facilitate employee IT support. Knowing that these legacy systems focus on elementary service desk support only and struggle with scalability, these tools play a static role.",
+    "blogurl": "how-it-support-automation-transforms-the-digital",
+    "categories": [
+      {
+        "name": "conai",
+        "displayName": "Conversational AI",
+        "heroImage": [
+          {
+            "title": "blog header 2",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/2v1y2HV20vaOT8WpiqYmm1/467d570dbd50cfa3dc1d17dd94d90961/blog_header_2.png",
+              "details": {
+                "size": 66092,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_2.png",
+              "contentType": "image/png"
+            }
+          },
+          {
+            "title": "blog header 9",
+            "file": {
+              "url": "//images.ctfassets.net/8lwhqpgztrkz/6UIhiFhCfTYl7kk45Ia57d/5c2e5d160e815cc96ccc2b17e0fb423c/blog_header_9.png",
+              "details": {
+                "size": 36075,
+                "image": {
+                  "width": 1444,
+                  "height": 1206
+                }
+              },
+              "fileName": "blog_header_9.png",
+              "contentType": "image/png"
+            }
+          }
+        ]
+      }
+    ],
+    "author": [
+      {
+        "authorName": "Rajesh Narayan",
+        "authorDescOne": "Rajesh – a writer who loves weaving his thoughts around products that help build the IT ecosystem. He loves talking to the audience and walking in their shoes. Advocating for user experience while bridging the gap between IT and business is what defines him. He’s passionate about SaaS marketing.",
+        "authorDescTwo": "Rajesh brings creativity to life through his words. He prefers reading online as much as he writes. In his free time, he watches movies and series, listens to music, or reads the news.",
+        "authorDesignation": "Content Writer",
+        "authorImage": {
+          "title": "Rajesh",
+          "file": {
+            "url": "//images.ctfassets.net/8lwhqpgztrkz/5A2ogyv1xI5ke6gnmwWtcW/77c55643bf299f4a98ef84fff9c54b54/Rajesh.png",
+            "details": {
+              "size": 3731293,
+              "image": {
+                "width": 2250,
+                "height": 2250
+              }
+            },
+            "fileName": "Rajesh.png",
+            "contentType": "image/png"
+          }
+        }
+      }
+    ]
+  }
+]
