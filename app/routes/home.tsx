@@ -1,32 +1,58 @@
 import { LoaderFunction } from "@remix-run/node";
-import { json, Outlet, useLoaderData } from "@remix-run/react";
+import { json, Outlet, redirect, useLoaderData } from "@remix-run/react";
 import Bloghomelayout from "~/components/BlogHome/bloghomelayout";
+import { Blog, getSortedBlogs } from "~/server/blogs.server";
 import client from "~/utils/contentful";
 
-export const loader: LoaderFunction = async () => {
-  const blogResponse = await client.getEntries({
-    content_type: "blog",
-    include: 2, 
-  });
 
-  const categoryResponse = await client.getEntries({
-    content_type: "categories",
-  });
+const makeHeroBlogEntity = (blog: Blog) => {
+  const images = blog.categories.map((category) => category.heroImage.map((image) => image.file.url)).flat()
+  const randomElement = images[Math.floor(Math.random() * images.length)];
 
-  return json({
-    blogs: blogResponse.items,
-    categories: categoryResponse.items,
-  });
+  return {
+    blogtitle: blog.blogtitle,
+    blogdescription: blog.blogdescription,
+    publishdate: blog.publishdate,
+    readTime: blog.blogdescription,
+    author: blog.author != undefined ? blog.author : [],
+    categories: blog.categories.map((category) => ({ name: category.name, displayName: category.displayName })),
+    blogurl: blog.blogurl,
+    image: randomElement,
+  }
+
+};
+
+export const loader = async () => {
+  const blogResponse = await getSortedBlogs()
+
+
+  const blogData = blogResponse.data
+
+  const latestBlog = blogData[0]
+
+  if (latestBlog) {
+    const heroBlog = makeHeroBlogEntity(latestBlog)
+    const categoryResponse = await client.getEntries({
+      content_type: "categories",
+    });
+    return json({
+      blogs: blogResponse.all,
+      categories: categoryResponse.items,
+      heroBlog,
+      blog: blogData,
+    });
+  }
+
+  return redirect("/")
 };
 
 function blog() {
-  const { blogs, categories }: { blogs: any[]; categories: any[] } = useLoaderData();
+  const { blogs, categories, heroBlog, blog } = useLoaderData<typeof loader>();
+
+  console.log("blogs", blog);
 
   return (
-    <div>
-      <Bloghomelayout blogs={blogs} categories={categories} />
-
-    </div>
+    <Bloghomelayout blogs={blogs} categories={categories} heroBlog={heroBlog} />
   );
 }
 

@@ -4,13 +4,31 @@ import bgImg from "../../Images/Ellipse.png";
 import cateory from "../../Images/category.svg";
 import { getRandomImagesForPage } from "~/utils/image";
 import { Link, Outlet } from "@remix-run/react";
+import { Author } from "~/server/blogs.server";
+
+
+export type HeroBlog = {
+  blogtitle: string;
+  blogdescription: string;
+  publishdate: string;
+  readTime: string;
+  author: Author[];
+  categories: {
+    name: string;
+    displayName: string;
+  }[];
+  blogurl: string;
+  image: string;
+}
+
 
 interface BlogListProps {
   blogs: any[];
   categories: any[];
+  heroBlog : HeroBlog
 }
 
-const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
+const BlogList: React.FC<BlogListProps> = ({ blogs, categories , heroBlog }) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -43,10 +61,10 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
   const filteredBlogs = useMemo(() => {
     return selectedCategory && selectedCategory !== "All Blogs"
       ? sortedBlogs.filter((data: any) =>
-          data.fields.categories.some(
-            (category: any) => category.fields.name === selectedCategory
-          )
+        data.fields.categories.some(
+          (category: any) => category.fields.name === selectedCategory
         )
+      )
       : sortedBlogs;
   }, [selectedCategory, sortedBlogs]);
 
@@ -57,7 +75,7 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
     return filteredBlogs.slice(firstBlogIndex, lastBlogIndex);
   }, [filteredBlogs, currentPage]);
 
-  const featuredBlog = sortedBlogs[0];
+  // const featuredBlog = sortedBlogs[0];
 
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {
@@ -80,7 +98,7 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
               Exercitation veniam consequat sunt nostrud amet.
             </p>
           </div>
-          <BlogHeader blog={featuredBlog} isHomeBlog={true} />
+          <BlogHeader blog={heroBlog} isHomeBlog={true} />
         </div>
 
         <div className="flex flex-col gap-10 w-full mb-5 px-20 overflow-x-hidden">
@@ -93,11 +111,10 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
               {chunk.map((category: any, categoryIndex: number) => (
                 <button
                   key={categoryIndex}
-                  className={`border hover:bg-brand-secondary rounded-[61px] px-5 py-3 text-[24px] font-medium leading-[31px] border-brand-primary text-brand-text_blue ${
-                    selectedCategory === category.fields.name
-                      ? "bg-brand-secondary text-brand-text_blue"
-                      : ""
-                  }`}
+                  className={`border hover:bg-brand-secondary rounded-[61px] px-5 py-3 text-[24px] font-medium leading-[31px] border-brand-primary text-brand-text_blue ${selectedCategory === category.fields.name
+                    ? "bg-brand-secondary text-brand-text_blue"
+                    : ""
+                    }`}
                   onClick={() =>
                     setSelectedCategory(
                       selectedCategory === category.fields.name ||
@@ -194,11 +211,10 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
             <button
               key={page}
               onClick={() => handlePageChange(page + 1)}
-              className={`px-3 py-1 border rounded-[100%] w-[66px] h-[66px] text-2xl font-medium text-brand-primary border-brand-primary ${
-                currentPage === page + 1
-                  ? "bg-brand-primary text-brand-primary border-brand-border_black"
-                  : ""
-              }`}
+              className={`px-3 py-1 border rounded-[100%] w-[66px] h-[66px] text-2xl font-medium text-brand-primary border-brand-primary ${currentPage === page + 1
+                ? "bg-brand-primary text-brand-primary border-brand-border_black"
+                : ""
+                }`}
             >
               {page + 1}
             </button>
