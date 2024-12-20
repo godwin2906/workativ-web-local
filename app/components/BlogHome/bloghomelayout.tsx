@@ -1,7 +1,8 @@
 import { useState, useMemo } from "react";
-import BlogHeader from "../BlogComp/blogheader";
+import BlogHeader from "../BlogGlobalComponents/blogheader";
 import bgImg from "../../Images/Ellipse.png";
 import cateory from "../../Images/category.svg";
+import { getRandomImagesForPage } from "~/utils/image";
 
 interface BlogListProps {
   blogs: any[];
@@ -62,12 +63,13 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
       setCurrentPage(newPage);
     }
   };
+  const randomImages = getRandomImagesForPage(currentPage);
 
   return (
     <div className="flex flex-col gap-12 w-full mt-5 mb-5 px-20 justify-center items-center overflow-x-hidden">
       <BlogHeader blog={featuredBlog} isHomeBlog={false} />
 
-      <div className="flex flex-col gap-10 w-full mt-5 mb-5 px-20  overflow-x-hidden">
+      <div className="flex flex-col gap-10 w-full mt-5 mb-5 px-20 overflow-x-hidden">
         {categoryChunks.map((chunk, index) => (
           <div
             key={index}
@@ -97,14 +99,14 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
         ))}
       </div>
 
-      <div className="grid grid-cols-3 gap-10 w-full justify-center items-center ">
+      <div className="grid grid-cols-3 gap-10 w-full justify-center items-center">
         {currentBlogs.map((data: any, index: number) => (
           <div
             key={index}
-            className="flex flex-col w-full min-h-[500px] max-h-[37rem] maxgap-5 border border-brand-border_blue rounded-[27px] shadow-[0px_4px_0px_0px_#1C5CFF]"
+            className="flex flex-col w-full min-h-[500px] max-h-[37rem] gap-5 border border-brand-border_blue rounded-[27px] shadow-[0px_4px_0px_0px_#1C5CFF]"
           >
             <div className="bg-brand-card rounded-tl-[26px] rounded-tr-[26px] border border-brand-card flex items-center justify-center h-[300px]">
-              <img src={cateory} />
+              <img src={randomImages[index]} alt={`Blog Image ${index}`} className="object-cover w-full h-full" />
             </div>
 
             <div className="flex flex-col justify-between flex-1 gap-3 px-10 py-5">
@@ -133,25 +135,6 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
               <div className="line-clamp-3 text-sm text-brand-secondary leading-[24px] font-normal">
                 {data.fields.blogdescription}
               </div>
-              <div className="flex justify-end text-sm font-medium text-gray-500">
-                {data.fields.author && (
-                  <div
-                    key={index}
-                    className="flex gap-4 justify-center items-center"
-                  >
-                    <img
-                      src={
-                        data?.fields?.author[0]?.fields.authorImage.fields.file
-                          .url
-                      }
-                      className="rounded-[100%] w-[64px] h-[64px]  border border-brand-border_black  bg-brand-primary"
-                    />
-                    <div className="text-[16px] font-medium leading-[51px] text-brand-secondary">
-                      {data?.fields?.author[0]?.fields.authorName}
-                    </div>
-                  </div>
-                )}
-              </div>
             </div>
           </div>
         ))}
@@ -173,7 +156,7 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories }) => {
             onClick={() => handlePageChange(page + 1)}
             className={`px-3 py-1 border rounded-[100%] w-[66px] h-[66px] text-2xl font-medium text-brand-primary border-brand-primary ${
               currentPage === page + 1
-                ? "bg-brand-primary  text-brand-primary border-brand-border_black"
+                ? "bg-brand-primary text-brand-primary border-brand-border_black"
                 : ""
             }`}
           >

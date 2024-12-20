@@ -1,7 +1,8 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS, INLINES, Block, Inline } from "@contentful/rich-text-types";
-import BlogCta from "../CTA/blogcta";
-import TableOfContents from "../TOC/toc";
+import BlogCta from "../BlogGlobalComponents/blogcta";
+import TableOfContents from "../BlogGlobalComponents/blogtoc";
+import { getPageRandomImages } from "~/utils/relatedImages";
 
 type ContentItem = {
   subtitle: string;
@@ -76,7 +77,7 @@ export default function BlogPostLayout({
   authorData,
 }: BlogPostProps) {
   const contentItems = blogPost.contentItems;
-
+  const pageRandomImages = getPageRandomImages(3);
   return (
     <section>
       <div className="flex">
@@ -135,86 +136,53 @@ export default function BlogPostLayout({
           <div className="mt-12">
             <h2 className="text-2xl font-semibold mb-6">Read More</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10 w-full justify-center items-center">
-              {relatedBlogs.map((blog, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col w-full min-h-[500px] max-h-[37rem] border border-brand-border_blue rounded-[27px] shadow-[0px_4px_0px_0px_#1C5CFF]"
-                >
-                  {/* Blog Image */}
-                  <div className="bg-brand-card rounded-tl-[26px] rounded-tr-[26px] border border-brand-card flex items-center justify-center h-[300px]">
-                    {blog.fields.image ? (
+              {relatedBlogs.map((blog, index) => {
+                const image = pageRandomImages[index];
+                return (
+                  <div
+                    key={index}
+                    className="flex flex-col w-full min-h-[500px] max-h-[37rem] border border-brand-border_blue rounded-[27px] shadow-[0px_4px_0px_0px_#1C5CFF]"
+                  >
+                    <div className="bg-brand-card rounded-tl-[26px] rounded-tr-[26px] border border-brand-card flex items-center justify-center h-[300px]">
                       <img
-                        src={blog.fields.image.fields.file.url}
-                        alt={blog.fields.blogtitle}
+                        src={image}
+                        alt={`Blog Image ${index + 1}`}
                         className="object-cover w-full h-full rounded-tl-[26px] rounded-tr-[26px]"
                       />
-                    ) : (
-                      <span className="text-gray-500 text-center">
-                        No Image Available
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Blog Details */}
-                  <div className="flex flex-col justify-between flex-1 gap-3 px-10 py-5">
-                    {/* Blog Title */}
-                    <div className="font-bold text-[20px] leading-[25px] line-clamp-2">
-                      {blog.fields.blogtitle}
                     </div>
 
-                    {/* Blog Categories and Publish Date */}
-                    <div className="flex justify-between items-center">
-                      <div className="flex gap-2">
-                        {blog.fields.categories?.map(
-                          (category, categoryIndex) => (
-                            <div
-                              key={categoryIndex}
-                              className="border rounded-[15px] px-3 py-1 border-brand-primary text-brand-primary bg-brand-primary w-fit text-[15px] font-medium"
-                            >
-                              {category.fields.displayName}
-                            </div>
-                          )
-                        )}
+                    <div className="flex flex-col justify-between flex-1 gap-3 px-10 py-5">
+                      <div className="font-bold text-[20px] leading-[25px] line-clamp-2">
+                        {blog.fields.blogtitle}
                       </div>
-                      <div className="flex justify-center items-center text-sm font-medium text-brand-text_lightGray border px-3 py-1 rounded-[27px] bg-brand-bg_white border-brand-primary whitespace-nowrap">
-                        {blog.fields.publishdate || "No Date"}
-                      </div>
-                    </div>
 
-                    {/* Blog Description */}
-                    <div className="line-clamp-3 text-sm text-brand-secondary leading-[24px] font-normal">
-                      {blog.fields.blogdescription ||
-                        "No Description Available"}
-                    </div>
-
-                    {/* Blog Author */}
-                    <div className="flex justify-end text-sm font-medium text-gray-500">
-                      {blog.fields.author && (
-                        <div className="flex gap-4 justify-center items-center">
-                          {blog.fields.author[0]?.fields.authorImage && (
-                            <img
-                              src={
-                                blog.fields.author[0]?.fields.authorImage.fields
-                                  .file.url
-                              }
-                              alt={blog.fields.author[0]?.fields.authorName}
-                              className="rounded-full w-[64px] h-[64px] border border-brand-border_black bg-brand-primary"
-                            />
+                      <div className="flex justify-between items-center">
+                        <div className="flex gap-2">
+                          {blog.fields.categories?.map(
+                            (category, categoryIndex) => (
+                              <div
+                                key={categoryIndex}
+                                className="border rounded-[15px] px-3 py-1 border-brand-primary text-brand-primary bg-brand-primary w-fit text-[15px] font-medium"
+                              >
+                                {category.fields.displayName}
+                              </div>
+                            )
                           )}
-                          <div className="text-[16px] font-medium leading-[51px] text-brand-secondary">
-                            {blog.fields.author[0]?.fields.authorName ||
-                              "Unknown Author"}
-                          </div>
                         </div>
-                      )}
+                        <div className="text-sm font-medium text-brand-text_lightGray">
+                          {blog.fields.publishdate || "No Date"}
+                        </div>
+                      </div>
+                      <div className="line-clamp-3 text-sm text-brand-secondary leading-[24px] font-normal">
+                        {blog.fields.blogdescription}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
-
         <div className="w-1/4 p-4">
           <TableOfContents contentItems={contentItems} />
         </div>

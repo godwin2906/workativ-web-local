@@ -1,5 +1,5 @@
 import React from "react";
-import Blog from "../../Images/Header img.png";
+import Blog from "../../assets/blogImages/Header img.png"
 
 interface BlogHeaderProps {
   blog: any;
