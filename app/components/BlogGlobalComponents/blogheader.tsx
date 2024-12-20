@@ -1,5 +1,5 @@
 import React from "react";
-import Blog from "../../assets/blogImages/Header img.png"
+import Blog from "../../assets/blogImages/Header img.png";
 
 interface BlogHeaderProps {
   blog: any;
@@ -37,9 +37,9 @@ const BlogHeader: React.FC<BlogHeaderProps> = ({ blog, isHomeBlog }) => {
                 Featured Blog
               </div>
 
-              <div className="flex flex-col gap-5">
-                <div className="flex justify-between gap-10 items-center">
-                  <div className="justify-start text-[27px] border font-medium rounded-[27px] px-3 py-1 border-brand-primary text-brand-primary bg-brand-primary w-fit">
+              <div className="flex flex-col gap-5 pr-14">
+                <div className="flex justify-between gap-10 items-center mb-8">
+                  <div className="justify-start text-[27px] border font-medium rounded-[27px] px-5 py-1 border-brand-primary text-brand-primary bg-brand-primary w-fit">
                     {blog.fields.categories?.map(
                       (category: any, index: number) => (
                         <span key={index} className="mr-2">
@@ -48,7 +48,7 @@ const BlogHeader: React.FC<BlogHeaderProps> = ({ blog, isHomeBlog }) => {
                       )
                     )}
                   </div>
-                  <div className="flex justify-center items-center py-1 h-fit border px-3 whitespace-nowrap text-center rounded-[27px] text-brand-primary border-brand-primary">
+                  <div className="flex justify-center items-center py-1 h-fit border px-5 whitespace-nowrap text-center rounded-[27px] text-brand-primary border-brand-primary">
                     {blog.fields.publishdate}
                   </div>
                 </div>
@@ -63,14 +63,14 @@ const BlogHeader: React.FC<BlogHeaderProps> = ({ blog, isHomeBlog }) => {
                   {blog.fields.blogdescription}
                 </div>
 
-                <div className="flex justify-between">
-                  <div className="border rounded-[27px] px-3 py-1 h-fit text-[24px] font-medium border-brand-border_black text-brand-primary bg-brand-primary w-fit">
+                <div className="flex justify-between mt-8">
+                  <div className="border rounded-[27px] px-5 py-1 h-fit text-[24px] font-medium border-brand-border_black text-brand-primary bg-brand-primary w-fit">
                     Read more
                   </div>
 
                   <div className="flex flex-row gap-3 justify-center items-center">
                     {blogData.map((data: any, index: number) => (
-                      <div key={index} className="flex gap-4 justify-start">
+                      <div key={index} className="flex gap-4 justify-start items-center">
                         <div className="">
                           <img
                             src={data.authorImage}
@@ -95,7 +95,7 @@ const BlogHeader: React.FC<BlogHeaderProps> = ({ blog, isHomeBlog }) => {
             <>
               <div className="flex flex-col gap-5">
                 <div className="flex justify-between gap-10 items-center">
-                  <div className="justify-start text-[27px] border font-medium rounded-[27px] px-3 py-1 border-brand-primary text-brand-primary bg-brand-primary w-fit">
+                  <div className="justify-start text-[27px] border font-medium rounded-[27px] px-5 py-1 border-brand-primary text-brand-primary bg-brand-primary w-fit">
                     {blog.fields.categories?.map(
                       (category: any, index: number) => (
                         <span key={index} className="mr-2">
@@ -112,11 +112,14 @@ const BlogHeader: React.FC<BlogHeaderProps> = ({ blog, isHomeBlog }) => {
                   </div>
                 </div>
 
-                <div className="">{blog.fields.publishdate}</div>
+                <div className="flex gap-4">
+                  <span>{blog.fields.publishdate}</span>
+                  <span>{blog.fields.readTime}</span>
+                </div>
 
                 <div className="flex flex-row gap-3">
                   {blogData.map((data: any, index: number) => (
-                    <div key={index} className="flex gap-4 justify-start">
+                    <div key={index} className="flex gap-4 justify-start items-center">
                       <div className="">
                         <img
                           src={data.authorImage}

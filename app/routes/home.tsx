@@ -25,7 +25,7 @@ function blog() {
   return (
     <div>
       <Bloghomelayout blogs={blogs} categories={categories} />
-      <Outlet />
+
     </div>
   );
 }
