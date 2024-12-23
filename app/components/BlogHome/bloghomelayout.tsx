@@ -1,12 +1,11 @@
 import { useState, useMemo } from "react";
 import BlogHeader from "../BlogGlobalComponents/blogheader";
-import bgImg from "../../Images/Ellipse.png";
-import cateory from "../../Images/category.svg";
 import { getRandomImagesForPage } from "~/utils/image";
 import { Link, Outlet } from "@remix-run/react";
 import { Author } from "~/server/blogs.server";
 import { useMedia } from "use-media";
 import { MoveLeft, MoveRight } from "lucide-react";
+import './../../styles/responsiveStyle/responsive.css'
 
 export type HeroBlog = {
   blogtitle: string;
@@ -36,8 +35,9 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
     fields: { name: "All Blogs", displayName: "All Blogs" },
   };
   const isMobile = useMedia({ maxWidth: "520px" });
+  const isTablet = useMedia("(min-width: 521px) and (max-width: 1024px)");
   const allCategories = [allBlogsButton, ...categories];
-  const buttonsPerRow = isMobile ? [3, 2, 2, 2] : [4, 4];
+  const buttonsPerRow = isMobile ? [3, 2, 2, 2] : isTablet ? [4, 2, 2] : [4, 4];
 
   let categoryChunks: any[] = [];
   let currentIndex = 0;
@@ -49,7 +49,7 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
     currentIndex += count;
   });
 
-  const blogsPerPage = isMobile ? 2 : 6;
+  const blogsPerPage = isMobile ? 2 : isTablet ? 4 : 6;
 
   const sortedBlogs = useMemo(() => {
     return blogs.sort((a: any, b: any) => {
@@ -115,7 +115,7 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
         )}
 
         <div
-          className={`flex flex-col  w-full mb-5 overflow-x-hidden ${
+          className={`flex flex-col categoryItemsMain w-full mb-5 overflow-x-hidden ${
             isMobile ? "gap-5" : "px-20 gap-10"
           }`}
         >
@@ -134,7 +134,7 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
                 return (
                   <button
                     key={categoryIndex}
-                    className={`border hover:bg-brand-secondary font-medium border-brand-primary text-brand-text_blue ${
+                    className={`border hover:bg-brand-secondary category_list_Items font-medium border-brand-primary text-brand-text_blue ${
                       selectedCategory === category.fields.name
                         ? "bg-brand-secondary text-brand-text_blue"
                         : ""
@@ -162,7 +162,7 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
 
         <div
           className={`grid gap-10 w-full justify-center items-center ${
-            isMobile ? "grid-cols-1" : "grid-cols-3"
+            isMobile ? "grid-cols-1" : isTablet ? "grid-cols-2" : "grid-cols-3"
           }`}
         >
           {currentBlogs.map((data: any, index: number) => (
@@ -188,7 +188,7 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
                     {data.fields.blogtitle}
                   </div>
 
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between categoryList_Section items-center">
                     <div className="flex gap-2">
                       {data.fields.categories.map(
                         (category: any, index: number) => (
