@@ -34,12 +34,12 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
   const allBlogsButton = {
     fields: { name: "All Blogs", displayName: "All Blogs" },
   };
+  const isMobile = useMedia({ maxWidth: "520px" });
   const allCategories = [allBlogsButton, ...categories];
-  const buttonsPerRow = [4, 4];
+  const buttonsPerRow = isMobile ? [3, 2, 2, 2] : [4, 4];
 
   let categoryChunks: any[] = [];
   let currentIndex = 0;
-  
 
   buttonsPerRow.forEach((count) => {
     categoryChunks.push(
@@ -47,11 +47,11 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
     );
     currentIndex += count;
   });
+  console.log(buttonsPerRow, "buttonsPerRowbuttonsPerRowbuttonsPerRow");
 
-  const isMobile = useMedia({maxWidth: '520px'});
-  const blogsPerPage = isMobile ? 2 : 6
+  const blogsPerPage = isMobile ? 2 : 6;
 
-  console.log(blogsPerPage)
+  console.log(blogsPerPage);
 
   const sortedBlogs = useMemo(() => {
     return blogs.sort((a: any, b: any) => {
@@ -87,25 +87,45 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
   };
   const randomImages = getRandomImagesForPage(currentPage);
 
+  console.log(categoryChunks[2], "categoryChunkscategoryChunks");
+
   return (
     <>
-      <div className="flex flex-col gap-12 w-full mt-5 mb-5 px-20 justify-center items-center overflow-x-hidden">
-        <div className="mb-[40px]">
-          <div className="flex flex-col justify-center items-center gap-4 mb-[65px]">
-            <h1 className="text-black text-center font-dm-sans text-[54px] font-bold leading-[80px]">
+      <div
+        className={`flex flex-col  w-full mt-5 mb-5 justify-center items-center overflow-x-hidden1 ${
+          isMobile ? "px-4 gap-8" : "px-20 gap-12"
+        }`}
+      >
+        {isMobile ? (
+          <div className="flex flex-col justify-center items-center">
+            <h1 className="text-black text-center font-dm-sans text-[26px] font-bold leading-[46px]">
               Workativ Blogs
             </h1>
-            <p className="text-[#21243D] text-center  font-heebo text-[17.39px] font-normal leading-normal w-2/3">
-              Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-              amet sint. Velit officia consequat duis enim velit mollit.
-              Exercitation veniam consequat sunt nostrud amet.
-            </p>
           </div>
-          <BlogHeader blog={heroBlog} isHomeBlog={true} />
-        </div>
+        ) : (
+          <div className="mb-[40px]">
+            <div className="flex flex-col justify-center items-center gap-4 mb-[65px]">
+              <h1 className="text-black text-center font-dm-sans text-[54px] font-bold leading-[80px]">
+                Workativ Blogs
+              </h1>
+              <p className="text-[#21243D] text-center  font-heebo text-[17.39px] font-normal leading-normal w-2/3">
+                Amet minim mollit non deserunt ullamco est sit aliqua dolor do
+                amet sint. Velit officia consequat duis enim velit mollit.
+                Exercitation veniam consequat sunt nostrud amet.
+              </p>
+            </div>
+            <BlogHeader blog={heroBlog} isHomeBlog={true} />
+          </div>
+        )}
 
-        <div className="flex flex-col gap-10 w-full mb-5 px-20 overflow-x-hidden">
-          <h3 className="text-center font-medium text-[30px]">Categories</h3>
+        <div
+          className={`flex flex-col  w-full mb-5 overflow-x-hidden ${
+            isMobile ? "gap-5" : "px-20 gap-10"
+          }`}
+        >
+          {!isMobile && (
+            <h3 className="text-center font-medium text-[30px]">Categories</h3>
+          )}
           {categoryChunks.map((chunk, index) => (
             <div
               key={index}
@@ -114,11 +134,15 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
               {chunk.map((category: any, categoryIndex: number) => (
                 <button
                   key={categoryIndex}
-                  className={`border hover:bg-brand-secondary rounded-[61px] px-5 py-3 text-[24px] font-medium leading-[31px] border-brand-primary text-brand-text_blue ${
+                  className={`border hover:bg-brand-secondary font-medium  border-brand-primary text-brand-text_blue ${
                     selectedCategory === category.fields.name
                       ? "bg-brand-secondary text-brand-text_blue"
                       : ""
-                  }`}
+                  } ${
+                    isMobile
+                      ? "text-[11px] rounded-[29px] flex  px-4 py-1"
+                      : "text[24px] rounded-[61px]  px-5 py-3 leading-[31px]"
+                  } ${buttonsPerRow[2] ? "bg-brand-primary" : ""}`}
                   onClick={() =>
                     setSelectedCategory(
                       selectedCategory === category.fields.name ||
@@ -135,7 +159,11 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
           ))}
         </div>
 
-        <div className={`grid gap-10 w-full justify-center items-center ${isMobile ? "grid-cols-1":"grid-cols-3"}`}>
+        <div
+          className={`grid gap-10 w-full justify-center items-center ${
+            isMobile ? "grid-cols-1" : "grid-cols-3"
+          }`}
+        >
           {currentBlogs.map((data: any, index: number) => (
             <div
               key={index}
@@ -202,7 +230,6 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
         </div>
 
         <div className="flex justify-center gap-4 mt-6">
-
           {currentPage > 1 && (
             <button
               onClick={() => handlePageChange(currentPage - 1)}
@@ -221,10 +248,9 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
 
               const page = startPage + i;
 
-       
               return page <= totalPages ? page : null;
             })
-            .filter((page) => page !== null) 
+            .filter((page) => page !== null)
             .map((page) => (
               <button
                 key={page}
@@ -238,7 +264,6 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
                 {page}
               </button>
             ))}
-
 
           {currentPage < totalPages && (
             <button
