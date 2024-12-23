@@ -5,7 +5,8 @@ import cateory from "../../Images/category.svg";
 import { getRandomImagesForPage } from "~/utils/image";
 import { Link, Outlet } from "@remix-run/react";
 import { Author } from "~/server/blogs.server";
-import {useMedia} from "use-media";
+import { useMedia } from "use-media";
+import { MoveLeft, MoveRight } from "lucide-react";
 
 export type HeroBlog = {
   blogtitle: string;
@@ -47,11 +48,8 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
     );
     currentIndex += count;
   });
-  console.log(buttonsPerRow, "buttonsPerRowbuttonsPerRowbuttonsPerRow");
 
   const blogsPerPage = isMobile ? 2 : 6;
-
-  console.log(blogsPerPage);
 
   const sortedBlogs = useMemo(() => {
     return blogs.sort((a: any, b: any) => {
@@ -86,8 +84,6 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
     }
   };
   const randomImages = getRandomImagesForPage(currentPage);
-
-  console.log(categoryChunks[2], "categoryChunkscategoryChunks");
 
   return (
     <>
@@ -131,30 +127,35 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
               key={index}
               className="flex gap-4 w-full justify-center items-center"
             >
-              {chunk.map((category: any, categoryIndex: number) => (
-                <button
-                  key={categoryIndex}
-                  className={`border hover:bg-brand-secondary font-medium  border-brand-primary text-brand-text_blue ${
-                    selectedCategory === category.fields.name
-                      ? "bg-brand-secondary text-brand-text_blue"
-                      : ""
-                  } ${
-                    isMobile
-                      ? "text-[11px] rounded-[29px] flex  px-4 py-1"
-                      : "text[24px] rounded-[61px]  px-5 py-3 leading-[31px]"
-                  } ${buttonsPerRow[2] ? "bg-brand-primary" : ""}`}
-                  onClick={() =>
-                    setSelectedCategory(
-                      selectedCategory === category.fields.name ||
-                        category.fields.name === "All Blogs"
-                        ? null
-                        : category.fields.name
-                    )
-                  }
-                >
-                  {category.fields.displayName}
-                </button>
-              ))}
+              {chunk.map((category: any, categoryIndex: number) => {
+                const isHighlighted =
+                  category.fields.displayName === "Conversational AI" ||
+                  category.fields.displayName === "Generative AI";
+                return (
+                  <button
+                    key={categoryIndex}
+                    className={`border hover:bg-brand-secondary font-medium border-brand-primary text-brand-text_blue ${
+                      selectedCategory === category.fields.name
+                        ? "bg-brand-secondary text-brand-text_blue"
+                        : ""
+                    } ${
+                      isMobile
+                        ? "text-[11px] rounded-[29px] flex px-5 py-2"
+                        : "text-[24px] rounded-[61px] px-5 py-3 leading-[31px]"
+                    } ${isHighlighted ? "px-8" : ""}`}
+                    onClick={() =>
+                      setSelectedCategory(
+                        selectedCategory === category.fields.name ||
+                          category.fields.name === "All Blogs"
+                          ? null
+                          : category.fields.name
+                      )
+                    }
+                  >
+                    {category.fields.displayName}
+                  </button>
+                );
+              })}
             </div>
           ))}
         </div>
@@ -178,7 +179,11 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
                   />
                 </div>
 
-                <div className="flex flex-col justify-between pt-9 px-7 pb-7 gap-5 rounded-bl-[27px] rounded-br-[27px] rounded-tl-0 rounded-tr-0 border-l border-r border-[#1C5CFF]">
+                <div
+                  className={`flex flex-col justify-between  gap-5 rounded-bl-[27px] rounded-br-[27px] rounded-tl-0 rounded-tr-0 border-l border-r border-[#1C5CFF] ${
+                    isMobile ? "pt-4 px-3 pb-4" : "pt-9 px-6 pb-7"
+                  }`}
+                >
                   <div className="font-bold text-[20px] leading-[25px] line-clamp-2">
                     {data.fields.blogtitle}
                   </div>
@@ -233,9 +238,11 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
           {currentPage > 1 && (
             <button
               onClick={() => handlePageChange(currentPage - 1)}
-              className="px-3 py-1 border rounded-[100%] w-[66px] h-[66px] font-medium text-[24px] text-brand-primary border-brand-primary"
+              className={`pt-0 pb-0 border rounded-full font-medium text-[24px] text-brand-primary border-brand-primary flex items-center justify-center ${
+                !isMobile ? "pr-[30px] pl-[30px]" : "pr-[20px] pl-[20px]"
+              }`}
             >
-              &lt;
+              <MoveLeft />
             </button>
           )}
 
@@ -255,11 +262,11 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
               <button
                 key={page}
                 onClick={() => handlePageChange(page)}
-                className={`px-3 py-1 border rounded-[100%] w-[66px] h-[66px] text-2xl font-medium text-brand-primary border-brand-primary ${
+                className={`px-4 py-6 border rounded-full w-14 h-14 text-2xl font-medium text-brand-primary border-brand-primary flex items-center justify-center ${
                   currentPage === page
                     ? "bg-brand-primary text-brand-primary border-brand-border_black"
                     : ""
-                }`}
+                } `}
               >
                 {page}
               </button>
@@ -268,9 +275,11 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
           {currentPage < totalPages && (
             <button
               onClick={() => handlePageChange(currentPage + 1)}
-              className="px-3 py-1 border rounded-[100%] w-[66px] h-[66px] text-brand-primary font-medium text-[24px] border-brand-primary"
+              className={`pt-0 pb-0 border rounded-full font-medium text-[24px] text-brand-primary border-brand-primary flex items-center justify-center ${
+                !isMobile ? "pr-[30px] pl-[30px]" : "pr-[20px] pl-[20px]"
+              }`}
             >
-              &gt;
+              <MoveRight />
             </button>
           )}
         </div>

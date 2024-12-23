@@ -21,7 +21,7 @@ const BlogHeader: React.FC<BlogHeaderProps> = ({ blog, isHomeBlog }) => {
           <img
             src={blog.image}
             alt="header"
-            className="w-[100%] h-[100%] rounded-[23px]"
+            className="w-[100%] h-[100%]"
           />
         </div>
         <div
@@ -53,7 +53,7 @@ const BlogHeader: React.FC<BlogHeaderProps> = ({ blog, isHomeBlog }) => {
                 </div>
 
                 <div className="flex">
-                  <div className="font-bold text-[42px] text-brand-secondary leading-[52px]">
+                  <div className="font-bold text-[2rem] text-brand-secondary leading-[52px]">
                     {blog.blogtitle}
                   </div>
                 </div>
