@@ -5,7 +5,7 @@ import cateory from "../../Images/category.svg";
 import { getRandomImagesForPage } from "~/utils/image";
 import { Link, Outlet } from "@remix-run/react";
 import { Author } from "~/server/blogs.server";
-
+import {useMedia} from "use-media";
 
 export type HeroBlog = {
   blogtitle: string;
@@ -19,16 +19,15 @@ export type HeroBlog = {
   }[];
   blogurl: string;
   image: string;
-}
-
+};
 
 interface BlogListProps {
   blogs: any[];
   categories: any[];
-  heroBlog : HeroBlog
+  heroBlog: HeroBlog;
 }
 
-const BlogList: React.FC<BlogListProps> = ({ blogs, categories , heroBlog }) => {
+const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -40,6 +39,7 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories , heroBlog }) => 
 
   let categoryChunks: any[] = [];
   let currentIndex = 0;
+  
 
   buttonsPerRow.forEach((count) => {
     categoryChunks.push(
@@ -48,7 +48,10 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories , heroBlog }) => 
     currentIndex += count;
   });
 
-  const blogsPerPage = 6;
+  const isMobile = useMedia({maxWidth: '520px'});
+  const blogsPerPage = isMobile ? 2 : 6
+
+  console.log(blogsPerPage)
 
   const sortedBlogs = useMemo(() => {
     return blogs.sort((a: any, b: any) => {
@@ -61,10 +64,10 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories , heroBlog }) => 
   const filteredBlogs = useMemo(() => {
     return selectedCategory && selectedCategory !== "All Blogs"
       ? sortedBlogs.filter((data: any) =>
-        data.fields.categories.some(
-          (category: any) => category.fields.name === selectedCategory
+          data.fields.categories.some(
+            (category: any) => category.fields.name === selectedCategory
+          )
         )
-      )
       : sortedBlogs;
   }, [selectedCategory, sortedBlogs]);
 
@@ -73,7 +76,7 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories , heroBlog }) => 
     const firstBlogIndex = (currentPage - 1) * blogsPerPage;
     const lastBlogIndex = firstBlogIndex + blogsPerPage;
     return filteredBlogs.slice(firstBlogIndex, lastBlogIndex);
-  }, [filteredBlogs, currentPage]);
+  }, [filteredBlogs, currentPage, blogsPerPage]);
 
   // const featuredBlog = sortedBlogs[0];
 
@@ -111,10 +114,11 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories , heroBlog }) => 
               {chunk.map((category: any, categoryIndex: number) => (
                 <button
                   key={categoryIndex}
-                  className={`border hover:bg-brand-secondary rounded-[61px] px-5 py-3 text-[24px] font-medium leading-[31px] border-brand-primary text-brand-text_blue ${selectedCategory === category.fields.name
-                    ? "bg-brand-secondary text-brand-text_blue"
-                    : ""
-                    }`}
+                  className={`border hover:bg-brand-secondary rounded-[61px] px-5 py-3 text-[24px] font-medium leading-[31px] border-brand-primary text-brand-text_blue ${
+                    selectedCategory === category.fields.name
+                      ? "bg-brand-secondary text-brand-text_blue"
+                      : ""
+                  }`}
                   onClick={() =>
                     setSelectedCategory(
                       selectedCategory === category.fields.name ||
@@ -131,7 +135,7 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories , heroBlog }) => 
           ))}
         </div>
 
-        <div className="grid grid-cols-3 gap-10 w-full justify-center items-center">
+        <div className={`grid gap-10 w-full justify-center items-center ${isMobile ? "grid-cols-1":"grid-cols-3"}`}>
           {currentBlogs.map((data: any, index: number) => (
             <div
               key={index}
@@ -198,6 +202,7 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories , heroBlog }) => 
         </div>
 
         <div className="flex justify-center gap-4 mt-6">
+
           {currentPage > 1 && (
             <button
               onClick={() => handlePageChange(currentPage - 1)}
@@ -207,18 +212,33 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories , heroBlog }) => 
             </button>
           )}
 
-          {[...Array(totalPages).keys()].map((page) => (
-            <button
-              key={page}
-              onClick={() => handlePageChange(page + 1)}
-              className={`px-3 py-1 border rounded-[100%] w-[66px] h-[66px] text-2xl font-medium text-brand-primary border-brand-primary ${currentPage === page + 1
-                ? "bg-brand-primary text-brand-primary border-brand-border_black"
-                : ""
+          {[...Array(3).keys()]
+            .map((i) => {
+              const startPage =
+                currentPage === totalPages && totalPages > 3
+                  ? totalPages - 2
+                  : Math.max(1, Math.min(currentPage - 1, totalPages - 2));
+
+              const page = startPage + i;
+
+       
+              return page <= totalPages ? page : null;
+            })
+            .filter((page) => page !== null) 
+            .map((page) => (
+              <button
+                key={page}
+                onClick={() => handlePageChange(page)}
+                className={`px-3 py-1 border rounded-[100%] w-[66px] h-[66px] text-2xl font-medium text-brand-primary border-brand-primary ${
+                  currentPage === page
+                    ? "bg-brand-primary text-brand-primary border-brand-border_black"
+                    : ""
                 }`}
-            >
-              {page + 1}
-            </button>
-          ))}
+              >
+                {page}
+              </button>
+            ))}
+
 
           {currentPage < totalPages && (
             <button
@@ -230,7 +250,6 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories , heroBlog }) => 
           )}
         </div>
       </div>
-
     </>
   );
 };
