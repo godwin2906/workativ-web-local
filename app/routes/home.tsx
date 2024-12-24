@@ -1,8 +1,9 @@
 import { LoaderFunction } from "@remix-run/node";
 import { json, Outlet, redirect, useLoaderData } from "@remix-run/react";
 import Bloghomelayout from "~/components/BlogHome/bloghomelayout";
-import { Blog, getSortedBlogs } from "~/server/blogs.server";
+import { Blog, BlogList, getCategories, getSortedBlogs } from "~/server/blogs.server";
 import client from "~/utils/contentful";
+import { getRandomImagesForPage, getRandomImage } from "~/utils/image";
 
 
 const makeHeroBlogEntity = (blog: Blog) => {
@@ -24,7 +25,8 @@ const makeHeroBlogEntity = (blog: Blog) => {
 
 export const loader = async () => {
   const blogResponse = await getSortedBlogs()
-
+  const randomImages = getRandomImagesForPage(1);
+  console.log("randomImages", randomImages);
 
   const blogData = blogResponse.data
 
@@ -35,24 +37,26 @@ export const loader = async () => {
     const categoryResponse = await client.getEntries({
       content_type: "categories",
     });
+
+    const categoryData = await getCategories()
     return json({
       blogs: blogResponse.all,
       categories: categoryResponse.items,
       heroBlog,
-      blog: blogData,
+      blogData: blogData.map((blog) => ({ ...blog, image: getRandomImage() })),
+      category: categoryData,
     });
   }
+
 
   return redirect("/")
 };
 
 function blog() {
-  const { blogs, categories, heroBlog, blog } = useLoaderData<typeof loader>();
-
-  console.log("blogs", blog);
+  const { blogs, categories, heroBlog, category, blogData } = useLoaderData<typeof loader>();
 
   return (
-    <Bloghomelayout blogs={blogs} categories={categories} heroBlog={heroBlog} />
+    <Bloghomelayout blogs={blogs} categories={categories} heroBlog={heroBlog} blogList={blogData as (Blog & { image: string })[]} category={category} />
   );
 }
 

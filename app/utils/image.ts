@@ -25,6 +25,11 @@ export function getRandomImagesForPage(page: number, imagesPerPage: number = 6):
   return imagesOnPage;
 }
 
+export const getRandomImage = () => {
+  const randomElement = imageList[Math.floor(Math.random() * imageList.length)];
+  return randomElement;
+}
+
 /**
  * Shuffles an array using the Fisher-Yates shuffle algorithm.
  * @param {T[]} array - The array to shuffle.
