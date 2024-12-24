@@ -1,7 +1,7 @@
 import { LoaderFunction } from "@remix-run/node";
 import { json, Outlet, redirect, useLoaderData } from "@remix-run/react";
-import Bloghomelayout from "~/components/BlogHome/bloghomelayout";
-import { Blog, BlogList, getCategories, getSortedBlogs } from "~/server/blogs.server";
+import Bloghomelayout from "~/components/BlogHome/bloghomelayout_updated";
+import { Blog, BlogList, BlogWithImage, getCategories, getSortedBlogs } from "~/server/blogs.server";
 import client from "~/utils/contentful";
 import { getRandomImagesForPage, getRandomImage } from "~/utils/image";
 
@@ -56,7 +56,7 @@ function blog() {
   const { blogs, categories, heroBlog, category, blogData } = useLoaderData<typeof loader>();
 
   return (
-    <Bloghomelayout blogs={blogs} categories={categories} heroBlog={heroBlog} blogList={blogData as (Blog & { image: string })[]} category={category} />
+    <Bloghomelayout blogs={blogs} categories={categories} heroBlog={heroBlog} blogList={blogData as BlogWithImage[]} category={category} />
   );
 }
 
