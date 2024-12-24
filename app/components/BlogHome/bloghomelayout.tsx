@@ -94,7 +94,7 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
       >
         {isMobile ? (
           <div className="flex flex-col justify-center items-center">
-            <h1 className="text-black text-center font-dm-sans text-[26px] font-bold leading-[46px]">
+            <h1 className="text-black text-center font-dm-sans text-[26px] font-bold leading-[46px] font-page-header sans-bold">
               Workativ Blogs
             </h1>
           </div>
@@ -275,7 +275,7 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
           {currentPage < totalPages && (
             <button
               onClick={() => handlePageChange(currentPage + 1)}
-              className={`pt-0 pb-0 border rounded-full font-medium text-[24px] text-brand-primary border-brand-primary flex items-center justify-center ${
+              className={`pt-0 pb-0 border rounded-full font-medium text-[24px]  text-brand-primary border-brand-primary flex items-center justify-center ${
                 !isMobile ? "pr-[30px] pl-[30px]" : "pr-[20px] pl-[20px]"
               }`}
             >
