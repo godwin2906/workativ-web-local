@@ -1,0 +1,48 @@
+@media (min-width: 521px) and (max-width: 1024px) {
+  .main_Blog {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .blogHome_leftBox {
+    width: 100%;
+  }
+  .blogHome_rightBox {
+    width: 100%;
+  }
+  .FeaturedBlog {
+    justify-content: flex-start;
+  }
+  .author_Section {
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .categoryItemsMain {
+    padding: 0;
+    gap: 12px;
+  }
+  .category_list_Items {
+    font-size: 18px;
+    border-radius: 29px;
+    display: flex;
+    padding: 8px 20px 8px 20px;
+  }
+  .categoryList_Section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .author_Section {
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .categoryList_Section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}

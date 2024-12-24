@@ -1,6 +1,6 @@
 import React from "react";
-import Blog from "../../assets/blogImages/Header img.png";
 import { HeroBlog } from "../BlogHome/bloghomelayout";
+import "../../styles/responsiveStyle/responsive.css";
 
 interface BlogHeaderProps {
   blog: HeroBlog;
@@ -16,36 +16,30 @@ const BlogHeader: React.FC<BlogHeaderProps> = ({ blog, isHomeBlog }) => {
 
   return (
     <div>
-      <div className="bg-brand-bg_white w-[100%] h-auto p-8 border border-brand-primary rounded-[27px] flex flex-row gap-8 justify-center shadow-[0px_4px_0px_0px_#000]">
-        <div className="w-1/2">
-          <img
-            src={blog.image}
-            alt="header"
-            className="w-[100%] h-[100%]"
-          />
+      <div className="main_Blog bg-brand-bg_white w-[100%] h-auto p-8 border border-brand-primary rounded-[27px] flex flex-row gap-8 justify-center shadow-[0px_4px_0px_0px_#000]">
+        <div className="w-1/2 blogHome_leftBox">
+          <img src={blog.image} alt="header" className="w-[100%] h-[100%]" />
         </div>
         <div
-          className={`flex flex-col gap-5 w-1/2 bg-cover bg-center bg-no-repeat ${
+          className={`flex flex-col gap-5 w-1/2 blogHome_rightBox bg-cover bg-center bg-no-repeat ${
             !isHomeBlog ? "justify-center" : ""
           }`}
           style={{ backgroundImage: `url(${""})` }}
         >
           {isHomeBlog ? (
             <>
-              <div className="flex justify-end text-brand-text_blue font-normal text-[24px] leading-[51px]">
+              <div className="flex FeaturedBlog justify-end text-brand-text_blue font-normal text-[24px] leading-[51px]">
                 Featured Blog
               </div>
 
               <div className="flex flex-col gap-5 pr-14">
                 <div className="flex justify-between gap-10 items-center mb-8">
                   <div className="justify-start text-[27px] border font-medium rounded-[27px] px-5 py-1 border-brand-primary text-brand-primary bg-brand-primary w-fit">
-                    {blog.categories?.map(
-                      (category: any, index: number) => (
-                        <span key={index} className="mr-2">
-                          {category.displayName}
-                        </span>
-                      )
-                    )}
+                    {blog.categories?.map((category: any, index: number) => (
+                      <span key={index} className="mr-2">
+                        {category.displayName}
+                      </span>
+                    ))}
                   </div>
                   <div className="flex justify-center items-center py-1 h-fit border px-5 whitespace-nowrap text-center rounded-[27px] text-brand-primary border-brand-primary">
                     {blog.publishdate}
@@ -62,14 +56,17 @@ const BlogHeader: React.FC<BlogHeaderProps> = ({ blog, isHomeBlog }) => {
                   {blog.blogdescription}
                 </div>
 
-                <div className="flex justify-between mt-8">
+                <div className="flex author_Section justify-between">
                   <div className="border rounded-[27px] px-5 py-1 h-fit text-[24px] font-medium border-brand-border_black text-brand-primary bg-brand-primary w-fit">
                     Read more
                   </div>
 
                   <div className="flex flex-row gap-3 justify-center items-center">
                     {authors.map((data: any, index: number) => (
-                      <div key={index} className="flex gap-4 justify-start items-center">
+                      <div
+                        key={index}
+                        className="flex gap-4 justify-start items-center"
+                      >
                         <div className="">
                           <img
                             src={data.authorImage}
@@ -95,13 +92,11 @@ const BlogHeader: React.FC<BlogHeaderProps> = ({ blog, isHomeBlog }) => {
               <div className="flex flex-col gap-5">
                 <div className="flex justify-between gap-10 items-center">
                   <div className="justify-start text-[27px] border font-medium rounded-[27px] px-5 py-1 border-brand-primary text-brand-primary bg-brand-primary w-fit">
-                    {blog.categories?.map(
-                      (category: any, index: number) => (
-                        <span key={index} className="mr-2">
-                          {category.displayName}
-                        </span>
-                      )
-                    )}
+                    {blog.categories?.map((category: any, index: number) => (
+                      <span key={index} className="mr-2">
+                        {category.displayName}
+                      </span>
+                    ))}
                   </div>
                 </div>
 
@@ -118,7 +113,10 @@ const BlogHeader: React.FC<BlogHeaderProps> = ({ blog, isHomeBlog }) => {
 
                 <div className="flex flex-row gap-3">
                   {authors.map((data: any, index: number) => (
-                    <div key={index} className="flex gap-4 justify-start items-center">
+                    <div
+                      key={index}
+                      className="flex gap-4 justify-start items-center"
+                    >
                       <div className="">
                         <img
                           src={data.authorImage}
