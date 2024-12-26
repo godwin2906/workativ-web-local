@@ -1,11 +1,10 @@
 import client from "~/utils/contentful";
 
-
 const stripMetaFields = (data: any) : any => {
   if (Array.isArray(data)) {
     return data.map(stripMetaFields);
   } else if (data && typeof data === 'object') {
-    console.log(data);
+    // console.log(data);
     data = data.fields || data;
     const { sys, meta, metadata, ...rest } = data;
     return Object.keys(rest).reduce((cleanData: any, key) => {
@@ -24,12 +23,12 @@ export const getSortedBlogs = async () => {
   const blogResponse = await client.getEntries({
     content_type: "blog",
     include: 2,
-    order: "-fields.publishdate",
+    order: ["-fields.publishdate"],
     limit: 10,
   });
 
   const blogFileds : BlogList = stripMetaFields(blogResponse.items)
-  console.log(JSON.stringify(blogResponse), "separator :::: ",JSON.stringify(blogFileds))
+  // console.log(JSON.stringify(blogResponse), "separator :::: ",JSON.stringify(blogFileds))
 
   return {
     all : blogResponse.items,
@@ -37,9 +36,25 @@ export const getSortedBlogs = async () => {
   };
 };
 
+export const getCategories = async () => {
+  const categoryResponse = await client.getEntries({
+    content_type: "categories",
+    // order: "fields.order",
+    // locale: "*",
+    // include: 2,
+  });
+
+  const categoryData = stripMetaFields(categoryResponse.items)
+
+  // console.log(JSON.stringify(categoryData))
+
+  return categoryData as Category[]
+}
 
 
 export type BlogList = Blog[]
+
+export type BlogWithImage = Blog & { image: string }
 
 export interface Blog {
   blogtitle: string

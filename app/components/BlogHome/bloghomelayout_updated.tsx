@@ -1,11 +1,16 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import BlogHeader from "../BlogGlobalComponents/blogheader";
-import { getRandomImagesForPage } from "~/utils/image";
 import { Link, Outlet } from "@remix-run/react";
-import { Author } from "~/server/blogs.server";
+import {
+  Author,
+  Category,
+  BlogList as BlogListT,
+  Blog,
+  BlogWithImage,
+} from "~/server/blogs.server";
 import { useMedia } from "use-media";
 import { MoveLeft, MoveRight } from "lucide-react";
-import './../../styles/responsiveStyle/responsive.css'
+import "./../../styles/responsiveStyle/responsive.css";
 
 export type HeroBlog = {
   blogtitle: string;
@@ -25,65 +30,129 @@ interface BlogListProps {
   blogs: any[];
   categories: any[];
   heroBlog: HeroBlog;
+  category: Category[];
 }
 
-const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+const allBlogCategory = {
+  name: "All",
+  displayName: "All Blogs",
+  heroImage: [],
+};
+
+interface BlogListProps_UPDATED {
+  blogs: any[];
+  categories: any[];
+  heroBlog: HeroBlog;
+  category: Category[];
+  blogList: BlogWithImage[];
+}
+
+function splitArrayByCounts<T>(inputArray: T[], counts: number[]): T[][] {
+  const result: T[][] = [];
+  let startIndex = 0;
+
+  for (const count of counts) {
+    if (startIndex >= inputArray.length) break;
+    const endIndex = startIndex + count;
+    result.push(inputArray.slice(startIndex, endIndex));
+    startIndex = endIndex;
+  }
+
+  return result;
+}
+
+function useCategories(categories: Category[], chunks: Array<number>) {
+  const allCategories = [allBlogCategory, ...categories];
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+
+  const categoriesWithSelectedFlag = allCategories.map(
+    (category: Category) => ({
+      ...category,
+      isSelected: selectedCategory === category.name,
+    })
+  );
+
+  const chunkedCategoriesWithSeletedFlag = splitArrayByCounts(
+    categoriesWithSelectedFlag,
+    chunks
+  );
+
+  return [
+    categoriesWithSelectedFlag,
+    chunkedCategoriesWithSeletedFlag,
+    setSelectedCategory,
+    selectedCategory,
+  ] as const;
+}
+
+function useBlogsPaginated(
+  blogs: BlogWithImage[],
+  selectedCategory: string,
+  blogsPerPage: number
+) {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const allBlogsButton = {
-    fields: { name: "All Blogs", displayName: "All Blogs" },
-  };
-  const isMobile = useMedia({ maxWidth: "520px" });
-  const isTablet = useMedia("(min-width: 521px) and (max-width: 1024px)");
-  const allCategories = [allBlogsButton, ...categories];
-  const buttonsPerRow = isMobile ? [3, 2, 2, 2] : isTablet ? [4, 2, 2] : [4, 4];
-
-  let categoryChunks: any[] = [];
-  let currentIndex = 0;
-
-  buttonsPerRow.forEach((count) => {
-    categoryChunks.push(
-      allCategories.slice(currentIndex, currentIndex + count)
-    );
-    currentIndex += count;
-  });
-
-  const blogsPerPage = isMobile ? 2 : isTablet ? 4 : 6;
-
-  const sortedBlogs = useMemo(() => {
-    return blogs.sort((a: any, b: any) => {
-      const dateA = new Date(a.fields.publishdate);
-      const dateB = new Date(b.fields.publishdate);
-      return dateB.getTime() - dateA.getTime();
-    });
-  }, [blogs]);
-
-  const filteredBlogs = useMemo(() => {
-    return selectedCategory && selectedCategory !== "All Blogs"
-      ? sortedBlogs.filter((data: any) =>
-          data.fields.categories.some(
-            (category: any) => category.fields.name === selectedCategory
-          )
-        )
-      : sortedBlogs;
-  }, [selectedCategory, sortedBlogs]);
-
+  const filteredBlogs =
+    selectedCategory === "All"
+      ? blogs
+      : blogs.filter((data) =>
+          data.categories.some((category) => category.name === selectedCategory)
+        );
   const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
-  const currentBlogs: any = useMemo(() => {
+
+  const currentBlogs = useMemo(() => {
     const firstBlogIndex = (currentPage - 1) * blogsPerPage;
     const lastBlogIndex = firstBlogIndex + blogsPerPage;
     return filteredBlogs.slice(firstBlogIndex, lastBlogIndex);
-  }, [filteredBlogs, currentPage, blogsPerPage]);
+  }, [filteredBlogs, currentPage]);
 
-  // const featuredBlog = sortedBlogs[0];
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {
       setCurrentPage(newPage);
     }
   };
-  const randomImages = getRandomImagesForPage(currentPage);
+
+  return [
+    currentBlogs,
+    totalPages,
+    currentPage,
+    setCurrentPage,
+    handlePageChange,
+  ] as const;
+}
+
+const BlogListUpdated: React.FC<BlogListProps_UPDATED> = ({
+  heroBlog,
+  blogList,
+  category,
+}) => {
+  const filteredBlogList = useMemo(
+    () => blogList.filter((blog) => blog.blogurl !== heroBlog.blogurl),
+    [blogList, heroBlog.blogurl]
+  );
+  const isMobile = useMedia({ maxWidth: "520px" });
+  const isTablet = useMedia("(min-width: 521px) and (max-width: 1024px)");
+  const categoryChunks = isMobile ? [3, 2, 2, 1] : [4, 4];
+  const blogsPerPage = isMobile ? 2 : 6;
+
+  const [
+    ,
+    chunkedCategoriesWithSeletedFlag,
+    setSelectedCategory,
+    selectedCategory,
+  ] = useCategories(category, categoryChunks);
+
+  const [
+    currentBlogs,
+    totalPages,
+    currentPage,
+    setCurrentPage,
+    handlePageChange,
+  ] = useBlogsPaginated(filteredBlogList, selectedCategory, blogsPerPage);
 
   return (
     <>
@@ -122,37 +191,31 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
           {!isMobile && (
             <h3 className="text-center font-medium text-[30px]">Categories</h3>
           )}
-          {categoryChunks.map((chunk, index) => (
+          {chunkedCategoriesWithSeletedFlag.map((chunk, index) => (
             <div
               key={index}
               className="flex gap-4 w-full justify-center items-center"
             >
-              {chunk.map((category: any, categoryIndex: number) => {
+              {chunk.map((category, categoryIndex: number) => {
                 const isHighlighted =
-                  category.fields.displayName === "Conversational AI" ||
-                  category.fields.displayName === "Generative AI";
+                  category.displayName === "Conversational AI" ||
+                  category.displayName === "Generative AI";
+                const isSelected = selectedCategory === category.name;
                 return (
                   <button
                     key={categoryIndex}
-                    className={`border hover:bg-brand-secondary category_list_Items font-medium border-brand-primary text-brand-text_blue ${
-                      selectedCategory === category.fields.name
+                    className={`border font-medium category_list_Items ${
+                      isSelected
                         ? "bg-brand-secondary text-brand-text_blue"
-                        : ""
-                    } ${
+                        : "hover:bg-brand-secondary text-brand-text_blue"
+                    } border-brand-primary ${
                       isMobile
                         ? "text-[11px] rounded-[29px] flex px-5 py-2"
                         : "text-[24px] rounded-[61px] px-5 py-3 leading-[31px]"
                     } ${isHighlighted ? "px-8" : ""}`}
-                    onClick={() =>
-                      setSelectedCategory(
-                        selectedCategory === category.fields.name ||
-                          category.fields.name === "All Blogs"
-                          ? null
-                          : category.fields.name
-                      )
-                    }
+                    onClick={() => setSelectedCategory(category.name)}
                   >
-                    {category.fields.displayName}
+                    {category.displayName}
                   </button>
                 );
               })}
@@ -165,15 +228,15 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
             isMobile ? "grid-cols-1" : isTablet ? "grid-cols-2" : "grid-cols-3"
           }`}
         >
-          {currentBlogs.map((data: any, index: number) => (
+          {currentBlogs.map((data, index: number) => (
             <div
               key={index}
               className="flex flex-col w-full transform transition-transform duration-200 hover:-translate-y-3 rounded-[27px]  bg-white shadow-[0px_4px_0px_0px_#1C5CFF]"
             >
-              <Link to={`/blog/${data.fields?.blogurl}`}>
+              <Link to={`/blog/${data.blogurl}`}>
                 <div className="border border-black rounded-tl-[27px] rounded-tr-[27px] rounded-bl-0 rounded-br-0 flex items-center justify-center">
                   <img
-                    src={randomImages[index]}
+                    src={data.image}
                     alt={`Blog Image ${index}`}
                     className="object-cover w-full h-full rounded-tl-[26px] rounded-tr-[26px]"
                   />
@@ -185,45 +248,40 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
                   }`}
                 >
                   <div className="font-bold text-[20px] leading-[25px] line-clamp-2">
-                    {data.fields.blogtitle}
+                    {data.blogtitle}
                   </div>
 
                   <div className="flex justify-between categoryList_Section items-center">
                     <div className="flex gap-2">
-                      {data.fields.categories.map(
-                        (category: any, index: number) => (
-                          <div
-                            key={index}
-                            className="border rounded-[15px] px-5 py-1 border-brand-primary text-brand-primary bg-brand-primary w-fit text-[15px] font-medium"
-                          >
-                            {category.fields.displayName}
-                          </div>
-                        )
-                      )}
+                      {data.categories.map((category, index: number) => (
+                        <div
+                          key={index}
+                          className="border rounded-[15px] px-5 py-1 border-brand-primary text-brand-primary bg-brand-primary w-fit text-[15px] font-medium"
+                        >
+                          {category.displayName}
+                        </div>
+                      ))}
                     </div>
                     <div className="flex justify-center items-center text-sm font-medium text-brand-text_lightGray border px-5 py-1 rounded-[27px] bg-brand-bg_white border-brand-primary whitespace-nowrap">
-                      {data.fields.publishdate}
+                      {data.publishdate}
                     </div>
                   </div>
 
                   <div className="line-clamp-3 text-sm text-brand-secondary leading-[24px] font-normal">
-                    {data.fields.blogdescription}
+                    {data.blogdescription}
                   </div>
                   <div className="flex justify-end text-sm font-medium text-gray-500">
-                    {data.fields.author && (
+                    {data.author && (
                       <div
                         key={index}
                         className="flex gap-4 justify-center items-center"
                       >
                         <img
-                          src={
-                            data?.fields?.author[0]?.fields.authorImage.fields
-                              .file.url
-                          }
+                          src={data.author[0].authorImage.file.url}
                           className="rounded-[100%] w-12 h-12  border border-brand-border_black  bg-brand-primary"
                         />
                         <div className="text-[16px] font-medium leading-[51px] text-brand-secondary">
-                          {data?.fields?.author[0]?.fields.authorName}
+                          {data.author[0].authorName}
                         </div>
                       </div>
                     )}
@@ -288,4 +346,4 @@ const BlogList: React.FC<BlogListProps> = ({ blogs, categories, heroBlog }) => {
   );
 };
 
-export default BlogList;
+export default BlogListUpdated;

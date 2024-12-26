@@ -1,24 +1,60 @@
 import React from "react";
-import { HeroBlog } from "../BlogHome/bloghomelayout";
+import { HeroBlog } from "../BlogHome/bloghomelayout_updated";
 import "../../styles/responsiveStyle/responsive.css";
 
 interface BlogHeaderProps {
-  blog: HeroBlog;
+  blog: any;
   isHomeBlog?: boolean;
 }
 
 const BlogHeader: React.FC<BlogHeaderProps> = ({ blog, isHomeBlog }) => {
-  const authors = blog.author.map((author) => ({
-    authorName: author.authorName,
-    authorDesignation: author.authorDesignation,
-    authorImage: author?.authorImage?.file?.url,
-  }));
+  const authors = Array.isArray(blog.author)
+    ? blog.author.map(
+        (author: {
+          authorName: any;
+          authorDesignation: any;
+          authorImage: { file: { url: any } };
+        }) => ({
+          authorName: author.authorName,
+          authorDesignation: author.authorDesignation,
+          authorImage: author?.authorImage?.file?.url,
+        })
+      )
+    : blog.fields?.author?.map(
+        (author: {
+          fields: {
+            authorName: string;
+            authorDesignation: string;
+            authorImage: { fields: { file: { url: string } } };
+          };
+        }) => ({
+          authorName: author.fields.authorName,
+          authorDesignation: author.fields.authorDesignation,
+          authorImage: author?.fields?.authorImage?.fields?.file?.url,
+        })
+      ) || [];
+
+  const categories = isHomeBlog
+    ? blog.categories?.map((category: any) => category.displayName)
+    : blog.fields?.categories?.map(
+        (category: { fields: { displayName: string } }) =>
+          category.fields.displayName
+      );
+
+  const heroImages = blog.fields?.categories[0]?.fields.heroImage || [];
+  const randomHeroImage = heroImages.length
+    ? heroImages[Math.floor(Math.random() * heroImages.length)].fields.file.url
+    : null;
 
   return (
     <div>
       <div className="main_Blog bg-brand-bg_white w-[100%] h-auto p-8 border border-brand-primary rounded-[27px] flex flex-row gap-8 justify-center shadow-[0px_4px_0px_0px_#000]">
         <div className="w-1/2 blogHome_leftBox">
-          <img src={blog.image} alt="header" className="w-[100%] h-[100%]" />
+          {isHomeBlog ? (
+            <img src={blog.image} alt="header" className="w-[100%] h-[100%]" />
+          ) : (
+            <img src={randomHeroImage} />
+          )}
         </div>
         <div
           className={`flex flex-col gap-5 w-1/2 blogHome_rightBox bg-cover bg-center bg-no-repeat ${
@@ -35,9 +71,9 @@ const BlogHeader: React.FC<BlogHeaderProps> = ({ blog, isHomeBlog }) => {
               <div className="flex flex-col gap-5 pr-14">
                 <div className="flex justify-between gap-10 items-center mb-8">
                   <div className="justify-start text-[27px] border font-medium rounded-[27px] px-5 py-1 border-brand-primary text-brand-primary bg-brand-primary w-fit">
-                    {blog.categories?.map((category: any, index: number) => (
+                    {categories?.map((category: any, index: any) => (
                       <span key={index} className="mr-2">
-                        {category.displayName}
+                        {category}
                       </span>
                     ))}
                   </div>
@@ -62,7 +98,7 @@ const BlogHeader: React.FC<BlogHeaderProps> = ({ blog, isHomeBlog }) => {
                   </div>
 
                   <div className="flex flex-row gap-3 justify-center items-center">
-                    {authors.map((data: any, index: number) => (
+                    {authors.map((data: any, index: any) => (
                       <div
                         key={index}
                         className="flex gap-4 justify-start items-center"
@@ -92,9 +128,9 @@ const BlogHeader: React.FC<BlogHeaderProps> = ({ blog, isHomeBlog }) => {
               <div className="flex flex-col gap-5">
                 <div className="flex justify-between gap-10 items-center">
                   <div className="justify-start text-[27px] border font-medium rounded-[27px] px-5 py-1 border-brand-primary text-brand-primary bg-brand-primary w-fit">
-                    {blog.categories?.map((category: any, index: number) => (
+                    {categories?.map((category: any, index: any) => (
                       <span key={index} className="mr-2">
-                        {category.displayName}
+                        {category}
                       </span>
                     ))}
                   </div>
@@ -102,17 +138,17 @@ const BlogHeader: React.FC<BlogHeaderProps> = ({ blog, isHomeBlog }) => {
 
                 <div className="flex">
                   <div className="font-bold text-[42px] text-brand-secondary">
-                    {blog.blogtitle}
+                    {blog.fields.blogtitle}
                   </div>
                 </div>
 
                 <div className="flex gap-4">
-                  <span>{blog.publishdate}</span>
-                  <span>{blog.readTime}</span>
+                  <span>{blog.fields.publishdate}</span>
+                  <span>{blog.fields.readTime}</span>
                 </div>
 
                 <div className="flex flex-row gap-3">
-                  {authors.map((data: any, index: number) => (
+                  {authors.map((data: any, index: any) => (
                     <div
                       key={index}
                       className="flex gap-4 justify-start items-center"

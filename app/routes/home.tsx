@@ -1,12 +1,20 @@
 import { LoaderFunction } from "@remix-run/node";
 import { json, Outlet, redirect, useLoaderData } from "@remix-run/react";
-import Bloghomelayout from "~/components/BlogHome/bloghomelayout";
-import { Blog, getSortedBlogs } from "~/server/blogs.server";
+import Bloghomelayout from "~/components/BlogHome/bloghomelayout_updated";
+import {
+  Blog,
+  BlogList,
+  BlogWithImage,
+  getCategories,
+  getSortedBlogs,
+} from "~/server/blogs.server";
 import client from "~/utils/contentful";
-
+import { getRandomImagesForPage, getRandomImage } from "~/utils/image";
 
 const makeHeroBlogEntity = (blog: Blog) => {
-  const images = blog.categories.map((category) => category.heroImage.map((image) => image.file.url)).flat()
+  const images = blog.categories
+    .map((category) => category.heroImage.map((image) => image.file.url))
+    .flat();
   const randomElement = images[Math.floor(Math.random() * images.length)];
 
   return {
@@ -15,44 +23,54 @@ const makeHeroBlogEntity = (blog: Blog) => {
     publishdate: blog.publishdate,
     readTime: blog.blogdescription,
     author: blog.author != undefined ? blog.author : [],
-    categories: blog.categories.map((category) => ({ name: category.name, displayName: category.displayName })),
+    categories: blog.categories.map((category) => ({
+      name: category.name,
+      displayName: category.displayName,
+    })),
     blogurl: blog.blogurl,
     image: randomElement,
-  }
-
+  };
 };
 
 export const loader = async () => {
-  const blogResponse = await getSortedBlogs()
+  const blogResponse = await getSortedBlogs();
+  const randomImages = getRandomImagesForPage(1);
 
+  const blogData = blogResponse.data;
 
-  const blogData = blogResponse.data
-
-  const latestBlog = blogData[0]
+  const latestBlog = blogData[0];
 
   if (latestBlog) {
-    const heroBlog = makeHeroBlogEntity(latestBlog)
+    const heroBlog = makeHeroBlogEntity(latestBlog);
     const categoryResponse = await client.getEntries({
       content_type: "categories",
     });
+
+    const categoryData = await getCategories();
     return json({
       blogs: blogResponse.all,
       categories: categoryResponse.items,
       heroBlog,
-      blog: blogData,
+      blogData: blogData.map((blog) => ({ ...blog, image: getRandomImage() })),
+      category: categoryData,
     });
   }
 
-  return redirect("/")
+  return redirect("/");
 };
 
 function blog() {
-  const { blogs, categories, heroBlog, blog } = useLoaderData<typeof loader>();
-
-  console.log("blogs", blog);
+  const { blogs, categories, heroBlog, category, blogData } =
+    useLoaderData<typeof loader>();
 
   return (
-    <Bloghomelayout blogs={blogs} categories={categories} heroBlog={heroBlog} />
+    <Bloghomelayout
+      blogs={blogs}
+      categories={categories}
+      heroBlog={heroBlog}
+      blogList={blogData as BlogWithImage[]}
+      category={category}
+    />
   );
 }
 
